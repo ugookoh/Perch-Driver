@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './styles';
-import { Animated, Text, View, Pressable, FlatList, StatusBar, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Platform, LayoutAnimation, UIManager, Alert, BackHandler, PanResponder } from 'react-native';
+import { Animated, Text, View, Pressable, FlatList, StatusBar, TouchableOpacity, Platform, Alert, BackHandler, PanResponder } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import Geolocation from 'react-native-geolocation-service';
 import KeepAwake from 'react-native-keep-awake';
@@ -11,7 +11,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { indexFinder, polylineLenght, OfflineNotice, x, y, colors, height, width, dimensionAssert, makeid, distanceCalculator } from '../../Functions/Functions';
-import MapView, { PROVIDER_GOOGLE, Marker, AnimatedRegion, Polyline, Polygon, Callout } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
 import MapStyle from '../../Components/MapStyle/MapStyle.json';
 import AnimatedPolyline from '../../Components/AnimatedPolyline/AnimatedPolyline';
 import { ViewVehicle } from '../../Components/VehicleComponents/VehicleComponents';
