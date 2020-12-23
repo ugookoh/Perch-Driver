@@ -47,6 +47,7 @@ export default class ContactUs extends React.Component {
             case 'choice': { text = 'Please explain what you would like discussed, we love to read ;)' } break;
             case 'Give feedback about our services': { text = `We appreciate the feedback! Remember to leave us a rating on the ${Platform.OS == 'ios' ? 'App Store' : 'Play Store'} :)` } break;
             case 'Report a rider': { text = `Note if reporting a rider , please include the name of the person if you remember for a faster processing time.` } break;
+            case 'Report a bug': { text = `Thanks for coming to us with this! Please describe the issue as precisely as you can and we would work on fixing it` } break;
             case 'Missing Item': { text = `Please explain the item as accurately as you can and we would get back to you as soon as we get some information.` } break;
             case 'Change your name': { text = `Please enter the name you would like to change it to in the format (first name-last name)` } break;
             case 'Other': { text = `Please explain what you would like discussed, we love to read ;)` } break;
@@ -150,6 +151,7 @@ export default class ContactUs extends React.Component {
                                 }}>
                                 <Picker.Item label="---Select a topic---" value="choice" color={colors.GREY_BACKGROUND} />
                                 <Picker.Item label="Give feedback about our services" value="Give feedback about our services" />
+                                <Picker.Item label="Report a bug" value="Report a bug" />
                                 <Picker.Item label="Missing Item" value="Missing Item" />
                                 <Picker.Item label="Change your name" value="Change your name" />
                                 <Picker.Item label="Report a rider" value="Report a rider" />
