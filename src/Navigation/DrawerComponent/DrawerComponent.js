@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './styles';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Animated, View, Text, TouchableOpacity, Dimensions, Image, TouchableWithoutFeedback, PanResponder, StatusBar, Platform, Alert } from 'react-native';
-import { signOut, x, y, height, width, colors } from '../../Functions/Functions';
+import { signOut, x, y, height, width, colors, openBrowser } from '../../Functions/Functions';
 import Divider from '../../Components/Divider/Divider';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
@@ -156,7 +156,8 @@ export default class DrawerComponent extends React.Component {
 
 
                     <TouchableOpacity onPress={() => {
-                        this.props.hideMenu();
+                        //this.props.hideMenu();
+                        openBrowser(`https://perchrides.com/s/articles/help_and_frequently_asked_questions`);
                         //this.props.navigation.navigate('GetFreeRides', { userDetails: this.state.userDetails });
                     }}>
                         <View style={styles.menuList}>

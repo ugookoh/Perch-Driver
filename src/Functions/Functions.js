@@ -416,6 +416,47 @@ export function signOut(forceUpdate) {
         })
         .catch(error => { console.log(error.message) })
 };
+export function sendPasswordResetLink(email) {
+    auth().sendPasswordResetEmail(email)
+      .then(() => {
+        Alert.alert('Email sent', 'Your password reset email has been successfully send',
+          [{ text: 'Ok', onPress: () => { this.props.navigation.goBack() } }])
+      }).catch(error => {
+        Alert.alert(`Error`, error.message);
+        this.setState({ loading: false })
+      })
+  };
+//SEND VERIFICATION CODES
+export function sendVerification(userID, type, action, code, phoneNumber, email, name, screenName) {
+    axios.post(`https://us-central1-perch-01.cloudfunctions.net/sendVerificationCode`,
+        {
+            userID: userID,
+            type: type,
+            action: action,
+            code: code,
+            phoneNumber: phoneNumber,
+            email: email,
+            name: name
+        })
+        .then((r) => {
+            const result = r.data;
+            if (action == 'check') {
+                if (result) {
+                    this.setState({ loading: false });
+                    if (screenName = 'VerifyPhoneNumber')
+                        this.props.navigation.navigate('Main')
+                }
+                else {
+                    this.setState({ loading: false })
+                    Alert.alert('Error', 'The verification code was not correct. Please check again or click resend.',);
+                }
+            }
+        })
+        .catch(error => {
+            Alert.alert('Error', `${error.message}, please resend code`);
+            this.setState({ loading: false });
+        })
+};
 //REVERSE GEOCODING
 export function reverseGeocoding(region, input, screen) {
     axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${region.latitude},${region.longitude}&key=${GOOGLE_KEY}`)
@@ -774,17 +815,17 @@ export function changePassword(oldPassword, newPassword) {
 //OPEN BROWSER 
 export async function openBrowser(URL) {
     try {
-        const url = URL;//'https://www.google.com'
+        const url = URL;//'https://www.perchrides.com'
         await InAppBrowser.isAvailable()
         InAppBrowser.open(url, {
             // iOS Properties
             dismissButtonStyle: 'close',
-            preferredBarTintColor: GREEN,
+            preferredBarTintColor: colors.BLUE,
             preferredControlTintColor: 'white',
             modalPresentationStyle: 'fullScreen',
             // Android Properties
             showTitle: true,
-            toolbarColor: GREEN,
+            toolbarColor: colors.BLUE,
             secondaryToolbarColor: WHITE,
             enableUrlBarHiding: true,
             enableDefaultShare: true,

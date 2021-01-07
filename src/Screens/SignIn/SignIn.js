@@ -4,7 +4,7 @@ import { Text, View, KeyboardAvoidingView, StatusBar, TextInput, Dimensions, Tou
 import AsyncStorage from '@react-native-community/async-storage';
 import SplashScreen from 'react-native-splash-screen';
 import PushNotification from 'react-native-push-notification';
-import { permissionLocation, Notifications, handleLogin, OfflineNotice, x, y, colors, height, width } from '../../Functions/Functions'
+import { permissionLocation, Notifications, handleLogin, OfflineNotice, x, y, colors, height, width, openBrowser } from '../../Functions/Functions'
 import { OnBoardingLogo, SignInIcons } from '../../Images/svgimages/vectors';
 import Button from '../../Components/Button/Button';
 
@@ -130,14 +130,16 @@ export default class SignIn extends React.Component {
                     </View>
                     <TouchableOpacity
                         style={[styles.messageView, { top: y(535) }]}
+                        onPress={() => { openBrowser(`https://perchrides.com/s/auth/d_si_su`); }}
                     >
                         <Text style={[styles.messageText, { color: colors.BLACK }]}>Forgot Password?</Text>
                     </TouchableOpacity>
                     <Text style={styles.or}>OR</Text>
                     <View style={[styles.messageView, { top: y(667) }]}><Text style={[styles.messageText, { color: colors.BLACK, opacity: 0.5 }]}>Don't have a driver account?</Text></View>
                     <View style={[styles.button, { top: y(705) }]}>
-                        <Button text={'Create a driver account'} width={x(322)} height={y(48)} 
+                        <Button text={'Create a driver account'} width={x(322)} height={y(48)}
                             onPress={() => {
+                                openBrowser(`https://perchrides.com/s/auth/d_si_su`);
                                 Keyboard.dismiss();
 
                             }}

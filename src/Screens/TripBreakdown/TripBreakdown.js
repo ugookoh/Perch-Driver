@@ -9,7 +9,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import database from '@react-native-firebase/database';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 const polyline = require('@mapbox/polyline');// for decoding polylines
-import { permissionLocation, createScheduledCarpoolRequest, createCarpoolRequest, OfflineNotice, x, y, colors, height, width, dimensionAssert } from '../../Functions/Functions';
+import { permissionLocation, createScheduledCarpoolRequest, createCarpoolRequest, OfflineNotice, x, y, colors, height, width, dimensionAssert, openBrowser } from '../../Functions/Functions';
 import MapView, { PROVIDER_GOOGLE, Marker, AnimatedRegion, Polyline, Polygon } from 'react-native-maps';
 import MapStyle from '../../Components/MapStyle/MapStyle.json';
 import AnimatedPolyline from '../../Components/AnimatedPolyline/AnimatedPolyline';
@@ -332,7 +332,9 @@ export default class TripBreakdown extends React.Component {
                     <View style={[styles.spaceViewLower, { marginTop: y(8) }]}>
                         <View>
                             <Text style={[styles.text, { width: x(255) }]}>Max number of passengers in vehicle at a time</Text>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => {
+                                openBrowser(`https://perchrides.com/s/articles/starting_a_driver_trip`);
+                            }}>
                                 <Text style={[styles.needHelp, { marginTop: y(5) }]}>Need help?</Text>
                             </TouchableOpacity>
                         </View>

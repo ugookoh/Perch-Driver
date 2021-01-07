@@ -6,7 +6,7 @@ import SplashScreen from 'react-native-splash-screen';
 import InAppBrowser from 'react-native-inappbrowser-reborn'
 import { OnBoardingLogo, ManOnTable } from '../../Images/svgimages/vectors';
 import Button from '../../Components/Button/Button';
-import { x, y, OfflineNotice, colors, height, width, signOut } from '../../Functions/Functions';
+import { x, y, OfflineNotice, colors, height, width, signOut, openBrowser } from '../../Functions/Functions';
 
 
 export default class ProcessingApplication extends React.Component {
@@ -42,6 +42,7 @@ export default class ProcessingApplication extends React.Component {
                 <View style={[styles.button, { top: y(410) }]}>
                     <Button text={'View Application'} width={x(322)} height={y(48)} loading={this.state.loading}
                         onPress={() => {
+                            openBrowser(`https://perchrides.com/s/db/d_app_dash`);
                             Keyboard.dismiss();
                         }}
                     />
