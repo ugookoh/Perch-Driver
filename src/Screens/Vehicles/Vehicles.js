@@ -3,7 +3,7 @@ import styles from './styles';
 import { Animated, Text, View, KeyboardAvoidingView, StatusBar, TextInput, Dimensions, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Platform, LayoutAnimation, UIManager, Alert, FlatList, } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import database from '@react-native-firebase/database';
-import { permissionLocation, Notifications, handleLogin, OfflineNotice, x, y, colors, height, width, dimensionAssert, CustomLayoutLinear } from '../../Functions/Functions'
+import { permissionLocation, Notifications, handleLogin, OfflineNotice, x, y, colors, height, width, openBrowser, CustomLayoutLinear } from '../../Functions/Functions'
 import Header from '../../Components/Header/Header';
 import Divider from '../../Components/Divider/Divider';
 import Feather from 'react-native-vector-icons/Feather';
@@ -65,11 +65,11 @@ export default class Vehicles extends React.Component {
         LayoutAnimation.configureNext(CustomLayoutLinear);
         return (
             <View style={styles.container}>
-                 <OfflineNotice navigation={this.props.navigation} screenName={this.props.route.name} />
-                <Header name={'Vehicles'} scrollY={this.state.scrollY} onPress={() => { 
+                <OfflineNotice navigation={this.props.navigation} screenName={this.props.route.name} />
+                <Header name={'Vehicles'} scrollY={this.state.scrollY} onPress={() => {
                     this.props.route.params.changeVehicle(this.state.result[this.state.keys[this.state.selected]])
                     this.props.navigation.goBack();
-                     }} />
+                }} />
                 <Text style={[styles.title, { marginTop: y(28) }]}>{`List of vehicles ${this.state.vehicleLenght ? `(${this.state.vehicleLenght})` : ``}`}</Text>
                 <View style={[styles.divider, { marginTop: y(8) }]}><Divider height={0.5} width={x(343)} borderRadius={0} borderColor={'#707070'} borderWidth={0.5} /></View>
                 {this.state.result ?
@@ -117,7 +117,9 @@ export default class Vehicles extends React.Component {
                 <View style={[styles.divider, { marginTop: y(5) }]}><Divider height={0.5} width={x(343)} borderRadius={0} borderColor={'#707070'} borderWidth={0.5} /></View>
 
                 <View style={styles.addVehicle}>
-                    <AddVehicle onPress={() => { this.props.navigation.navigate('AddAVehicle')}} />
+                    <AddVehicle onPress={() => {
+                        openBrowser(`https://perchrides.com/s/db/ddash`);
+                    }} />
                 </View>
 
                 <View style={styles.manOnCar}>

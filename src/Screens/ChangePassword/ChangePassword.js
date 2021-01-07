@@ -2,14 +2,14 @@ import React from 'react';
 import styles from './styles';
 import { Animated, Text, View, KeyboardAvoidingView, StatusBar, TextInput, Dimensions, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Platform, LayoutAnimation, UIManager, AppState, BackHandler } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { changePassword, CustomLayoutLinear, OfflineNotice, x, y, colors, height, width } from '../../Functions/Functions'
+import { changePassword, CustomLayoutLinear, OfflineNotice, x, y, colors, height, width, sendPasswordResetLink } from '../../Functions/Functions'
 import Header from '../../Components/Header/Header';
 import Button from '../../Components/Button/Button';
 //import {  } from '../../Images/svgimages/vectors';
 
 export default class ChangePassword extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         if (Platform.OS === 'android') {
             UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -22,6 +22,7 @@ export default class ChangePassword extends React.Component {
             confirmNewPassword: '',
             errorMessage: '',
             loading: false,
+            userDetails: this.props.route.params.userDetails,
 
         };
     }
@@ -32,7 +33,7 @@ export default class ChangePassword extends React.Component {
             <TouchableWithoutFeedback
                 onPress={() => { Keyboard.dismiss() }}>
                 <View style={styles.container}>
-                     <OfflineNotice navigation={this.props.navigation} screenName={this.props.route.name} />
+                    <OfflineNotice navigation={this.props.navigation} screenName={this.props.route.name} />
                     <View style={styles.header}>
                         <Header name={'Change Password'} scrollY={this.state.scrollY} onPress={() => { this.props.navigation.goBack() }} />
                     </View>
@@ -101,7 +102,12 @@ export default class ChangePassword extends React.Component {
                             </View>}
                             <View style={styles.choices}>
                                 <Text style={styles.fP}>Forgot password?</Text>
-                                <TouchableOpacity style={{ top: x(3), }}>
+                                <TouchableOpacity style={{ top: x(3), }}
+                                    onPress={() => {
+                                        this.setState({ loading: true }, () => {
+                                            sendPasswordResetLink.call(this, this.state.userDetails.email);
+                                        })
+                                    }}>
                                     <Text style={styles.vE}>Send verification email</Text>
                                 </TouchableOpacity>
                             </View>
@@ -136,7 +142,7 @@ export default class ChangePassword extends React.Component {
                     </KeyboardAvoidingView>
 
                 </View>
-            </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback >
         )
     }
 }

@@ -7,8 +7,10 @@ import Header from '../../Components/Header/Header';
 import { Avatar } from '../../Images/svgimages/vectors';
 import Divider from '../../Components/Divider/Divider';
 import storage from '@react-native-firebase/storage';
+import axios from 'axios';
+import database from '@react-native-firebase/database';
 
-export default class Privacy extends React.Component {
+export default class Profile extends React.Component {
     constructor(props) {
         super(props);
 
@@ -21,21 +23,34 @@ export default class Privacy extends React.Component {
             loading: false,
             errorMessage: '',
             userDetails: this.props.route.params.userDetails,
-            originalemail: this.props.route.params.userDetails.email,
-            originalphoneNumber: this.props.route.params.userDetails.phoneNumber, //CHANGE THESE ORIGINAL VALUES WHEN YOU VERIFY AN EMAIL
-            url: null,
+            originalEmail: this.props.route.params.userDetails.email,
+            originalPhoneNumber: this.props.route.params.userDetails.phoneNumber, //CHANGE THESE ORIGINAL VALUES WHEN YOU VERIFY AN EMAIL
             photoRef: this.props.route.params.userDetails.photoRef,
+            url: null,
 
+            phoneVerified: this.props.route.params.userDetails.summarizedHistory.phoneVerified,
+            emailVerified: this.props.route.params.userDetails.summarizedHistory.emailVerified,
         };
         this.setImage();
     }
+    componentDidMount() {
+        database().ref(`users/${this.state.userDetails.userID}/summarizedHistory`).on('value', snapshot => {
+            this.setState({ phoneVerified: snapshot.val().phoneVerified, emailVerified: snapshot.val().emailVerified })
+        })
+        database().ref(`users/${this.state.userDetails.userID}/phoneNumber`).on('value', snapshot => {
+            this.setState({ originalPhoneNumber: snapshot.val() })
+        })
+        database().ref(`users/${this.state.userDetails.userID}/email`).on('value', snapshot => {
+            this.setState({ originalEmail: snapshot.val() })
+        })
+    }
     setImage = () => {
-        storage().ref(`${this.state.photoRef}`).getDownloadURL()
+        storage().ref(`${this.state.userDetails.photoRef}`).getDownloadURL()
             .then(result => {
                 this.setState({ url: result })
             }).catch(error => { console.log(error.message) })
     };
-    updateName = () => {
+    updateName() {
         Alert.alert(
             'We cannot update this field',
             'To update this field you need to contact us with the name you want to update it to',
@@ -58,8 +73,8 @@ export default class Privacy extends React.Component {
 
     }
     render() {
-        let phoneVerified = this.state.userDetails.phoneVerified && this.state.originalphoneNumber === this.state.phoneNumber ? true : false;
-        let emailVerified = this.state.userDetails.emailVerified && this.state.originalemail === this.state.email ? true : false;
+        let phoneVerified = this.state.phoneVerified && this.state.originalPhoneNumber === this.state.phoneNumber ? true : false;
+        let emailVerified = this.state.emailVerified && this.state.originalEmail === this.state.email ? true : false;
 
 
         return (
@@ -73,7 +88,7 @@ export default class Privacy extends React.Component {
 
                     <KeyboardAvoidingView behavior={'position'}>
                         <View style={styles.secondaryContainer}>
-                        <View style={[styles.avatarContainer,this.state.url?{}:{ backgroundColor: '#85A4F7',}]}>
+                            <View style={[styles.avatarContainer, this.state.url ? {} : { backgroundColor: colors.BLUE_LIGHT, }]}>
                                 <TouchableOpacity>
                                     {this.state.url ?
                                         <Image
@@ -128,7 +143,7 @@ export default class Privacy extends React.Component {
                                         <TextInput
                                             placeholder={'Enter your email...'}
                                             style={styles.textInput}
-                                            placeholderTextColor={colors.GREY_OPAQUE(0.85)}
+                                            placeholderTextColor={`rgba(204, 206, 211,0.9)`}
                                             onChangeText={(value) => { this.setState({ email: value }) }}
                                             value={this.state.email}
                                             keyboardType={'email-address'}
@@ -139,7 +154,9 @@ export default class Privacy extends React.Component {
                                                 //SEND THE VERIFICATION CODE HERE
                                                 Keyboard.dismiss();
                                                 this.props.navigation.navigate('VerifyDetails', {
-                                                    type: 'Email'
+                                                    type: 'Email',
+                                                    userDetails: this.state.userDetails,
+                                                    display: this.state.email
                                                 });
                                             }}>
                                             <Text style={[styles.tag, { top: y(dimensionAssert() ? -16 : 0), color: emailVerified ? colors.BLUE : colors.RED }]}>{emailVerified ? `VERIFIED` : `VERIFY`}</Text>
@@ -155,7 +172,7 @@ export default class Privacy extends React.Component {
                                         <TextInput
                                             placeholder={'Enter your phone number...'}
                                             style={styles.textInput}
-                                            placeholderTextColor={colors.GREY_OPAQUE(0.85)}
+                                            placeholderTextColor={`rgba(204, 206, 211,0.9)`}
                                             onChangeText={(value) => { this.setState({ phoneNumber: value }) }}
                                             value={this.state.phoneNumber}
                                             keyboardType={'number-pad'}
@@ -165,9 +182,24 @@ export default class Privacy extends React.Component {
                                             onPress={() => {
                                                 //SEND THE VERIFICATION CODE HERE
                                                 Keyboard.dismiss();
-                                                this.props.navigation.navigate('VerifyDetails', {
-                                                    type: 'Phone Number'
-                                                });
+
+                                                axios.post(`https://us-central1-perch-01.cloudfunctions.net/checkIfPhoneNumberIsFree`, { phoneNumber: this.state.phoneNumber })
+                                                    .then((r) => {
+                                                        if (r.data) {
+                                                            this.props.navigation.navigate('VerifyDetails', {
+                                                                type: 'Phone Number',
+                                                                userDetails: this.state.userDetails,
+                                                                display: this.state.phoneNumber,
+                                                            });
+                                                        }
+                                                        else
+                                                            Alert.alert('Error', 'Phone number already in use by another account')
+                                                    })
+                                                    .catch(error => {
+                                                        Alert.alert('Error', error.message)
+                                                    })
+
+
                                             }}>
                                             <Text style={[styles.tag, { top: y(dimensionAssert() ? -16 : 0), color: phoneVerified ? colors.BLUE : colors.RED }]}>{phoneVerified ? `VERIFIED` : `VERIFY`}</Text>
                                         </TouchableOpacity>
@@ -182,7 +214,7 @@ export default class Privacy extends React.Component {
                         <TouchableOpacity
                             onPress={() => {
                                 Keyboard.dismiss();
-                                this.props.navigation.navigate('ChangePassword')
+                                this.props.navigation.navigate('ChangePassword', { userDetails: this.state.userDetails })
                             }}
                             style={styles.changePassword}>
                             <Text style={[styles.delete,]}>Change Password</Text>
@@ -191,10 +223,16 @@ export default class Privacy extends React.Component {
                     <View style={{ width: width, alignItems: 'center', top: x(dimensionAssert() ? -55 : -10), paddingHorizontal: x(12.5) }}>
                         <Text numberOfLines={2} style={styles.errorMessage}>{this.state.errorMessage}</Text>
                     </View>
+                    {/* <View style={styles.buttonContainer}>
+                        <View style={[styles.button, {}]}>
+                            <Button text={'Save changes'} width={x(343)} height={y(48)} top={0} left={0} zIndex={2} loading={this.state.loading} onPress={() => {
 
+
+                            }} />
+                        </View>
+                    </View> */}
                 </View>
             </TouchableWithoutFeedback>
         )
     }
-}
-
+};
