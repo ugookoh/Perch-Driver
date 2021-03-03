@@ -252,7 +252,7 @@ export default class Chat extends React.Component {
                 m: ID ? 'Image' : this.state.message,
                 tS: getTime(),
                 time: new Date().getTime() + `-${makeid(7)}`,//TO SEPERATE KEYS ,TIME SEPERATED BY - TO A ID
-                date: `${DAY}/${MONTH}/${YEAR}`,
+                date: `${DAY}/${MONTH + 1}/${YEAR}`,
                 imageID: ID,
             })
                 .then(() => {

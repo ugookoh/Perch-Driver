@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './styles';
-import { Animated, Text, View, Alert, StatusBar, TextInput, Dimensions, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Platform, LayoutAnimation, UIManager, AppState, BackHandler } from 'react-native';
+import { Animated, Text, View, Alert, StatusBar, TextInput, Dimensions, TouchableOpacity, } from 'react-native';
 import database from '@react-native-firebase/database';
 import * as turf from '@turf/turf';//for encoding polylines
-import { permissionLocation, scheduledCarpoolRequestCanceller, OfflineNotice, x, y, colors, height, width, dimensionAssert, polylineLenght, carpoolRatingHandler } from '../../Functions/Functions'
+import { permissionLocation, scheduledCarpoolRequestCanceller, OfflineNotice, x, y, colors, height, width, dimensionAssert, polylineLenght, carpoolRatingHandler, cancelTrip } from '../../Functions/Functions'
 import Header from '../../Components/Header/Header';
 import MapView, { PROVIDER_GOOGLE, Marker, AnimatedRegion, Polyline, Polygon } from 'react-native-maps';
 import MapStyle from '../../Components/MapStyle/MapStyle.json';
@@ -30,7 +30,6 @@ export default class SeeDetails extends React.Component {
         };
     };
     componentDidMount() {
-
         this.mainAppend = this.props.route.params.mainAppend;
 
         if (this.state.scheduled && this.state.type == 'PendingRequests')
@@ -59,19 +58,19 @@ export default class SeeDetails extends React.Component {
                     if (this.state.type == 'PendingRequest' && this.state.alert === false) {
                         this.setState({ alert: true });
                         if (this.props.navigation.isFocused())
-                        Alert.alert('Timeout',
-                            'Time has run out for this request and it is no longer available',
-                            [
-                                {
-                                    text: 'OK',
-                                    style: 'cancel',
-                                    onPress: () => {
-                                        this.props.route.params.onDecline();
-                                        this.props.navigation.navigate('TripStarted');
-                                    },
-                                }
-                            ],
-                            { cancelable: false })
+                            Alert.alert('Timeout',
+                                'Time has run out for this request and it is no longer available',
+                                [
+                                    {
+                                        text: 'OK',
+                                        style: 'cancel',
+                                        onPress: () => {
+                                            this.props.route.params.onDecline();
+                                            this.props.navigation.navigate('TripStarted');
+                                        },
+                                    }
+                                ],
+                                { cancelable: false })
                     }
                 }
             });
@@ -395,7 +394,38 @@ export default class SeeDetails extends React.Component {
                                 </TouchableOpacity>
                             </View> :
                             <TouchableOpacity
-                                style={[styles.cancelTrip, { marginBottom: y(dimensionAssert() ? 20 : 66.5), marginTop: y(dimensionAssert() ? 20 : 15.5), height: y(55) }]}>
+                                style={[styles.cancelTrip, { marginBottom: y(dimensionAssert() ? 20 : 66.5), marginTop: y(dimensionAssert() ? 20 : 15.5), height: y(55) }]}
+                                onPress={() => {
+                                    //REQUESTS THAT HAPPEN RN
+                                    Alert.alert('Cancel this trip?',
+                                        'Are you sure you would like to cancel this trip?',
+                                        [{
+                                            text: 'Back',
+                                            style: 'cancel',
+                                        }, {
+                                            text: 'Cancel trip',
+                                            style: 'destructive',
+                                            onPress: () => {
+                                                AsyncStorage.getItem('USER_DETAILS')
+                                                    .then(result => {
+                                                        const driverName = JSON.parse(result).firstName;
+                                                        //NOW
+                                                        cancelTrip.call(this,
+                                                            {
+                                                                userID: this.state.data.details.userID,
+                                                                type: 'driver',
+                                                                time: new Date().getTime(),
+                                                                riderName: this.state.data.details.firstName,
+                                                                driverName: driverName,
+                                                                driverID_: this.state.data.details.tripDetails.driverID,
+                                                            })
+                                                    }).catch(error => {
+                                                        Alert.alert('Storage error', `Error, ${error.message}`)
+                                                    })
+                                            },
+                                        }])
+
+                                }}>
                                 <Text style={styles.buttonText}>Cancel Trip</Text>
                             </TouchableOpacity>) :
                         <View style={styles.help}>
