@@ -418,14 +418,14 @@ export function signOut(forceUpdate) {
 };
 export function sendPasswordResetLink(email) {
     auth().sendPasswordResetEmail(email)
-      .then(() => {
-        Alert.alert('Email sent', 'Your password reset email has been successfully send',
-          [{ text: 'Ok', onPress: () => { this.props.navigation.goBack() } }])
-      }).catch(error => {
-        Alert.alert(`Error`, error.message);
-        this.setState({ loading: false })
-      })
-  };
+        .then(() => {
+            Alert.alert('Email sent', 'Your password reset email has been successfully send',
+                [{ text: 'Ok', onPress: () => { this.props.navigation.goBack() } }])
+        }).catch(error => {
+            Alert.alert(`Error`, error.message);
+            this.setState({ loading: false })
+        })
+};
 //SEND VERIFICATION CODES
 export function sendVerification(userID, type, action, code, phoneNumber, email, name, screenName) {
     axios.post(`https://us-central1-perch-01.cloudfunctions.net/sendVerificationCode`,
@@ -595,6 +595,34 @@ export function isUserLoggedIn() {
         else
             this.props.navigation.navigate('SignIn');
     })
+};
+//CANCEL FUNCTION
+export function cancelTrip(toSend) {
+    axios.post(`https://us-central1-perch-01.cloudfunctions.net/cancelTrip`, toSend)
+        .then(() => {
+            Alert.alert(
+                'The trip has been cancelled',
+                'We would reach out to you shortly regarding refunds and compensation. Contact us for further information.',
+                [{
+                    text: 'Done',
+                    style: 'cancel',
+                    onPress: () => {
+                        this.props.navigation.goBack();
+                    },
+                },
+                ])
+        })
+        .catch(() => {
+            Alert.alert(
+                'Cancel request failed',
+                'We failed to cancel this trip due to unknown reasons, please try again. Contact us for further help.',
+                [{
+                    text: 'Close',
+                    style: 'cancel',
+                },
+                ])
+        })
+
 };
 //GET LOCATION COORDINATES
 export function getLocation(mainText, description, id, fieldID, screen) {
@@ -820,12 +848,12 @@ export async function openBrowser(URL) {
         InAppBrowser.open(url, {
             // iOS Properties
             dismissButtonStyle: 'close',
-            preferredBarTintColor: colors.BLUE,
+            preferredBarTintColor: 'rgb(64, 64, 64)',
             preferredControlTintColor: 'white',
             modalPresentationStyle: 'fullScreen',
             // Android Properties
             showTitle: true,
-            toolbarColor: colors.BLUE,
+            toolbarColor: 'rgb(64, 64, 64)',
             secondaryToolbarColor: WHITE,
             enableUrlBarHiding: true,
             enableDefaultShare: true,

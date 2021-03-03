@@ -406,6 +406,58 @@ export default class TripStarted extends React.Component {
                                     this.setState({ markers: markers, indexes: indexes });
                                 }
                             });
+                            database().ref(`currentCarpoolTrips/${userDetails.driverID}`).on('child_removed', data => {
+                                if (data.val().status == 'UNPICKED') {
+                                    this.updateResultsRemove('AP', data.val());
+                                    let markers = this.state.markers;//if picked we show where the dropoff is
+                                    const leg = JSON.parse(data.val().details.tripDetails.leg);
+
+                                    for (let i = 0; i < markers.length; i++)
+                                        if (markers[i].userID == data.val().userID && markers[i].type == 'Location')
+                                            markers.splice(i, 1);
+
+                                    let rL = this.state.riderlocations;
+                                    for (let i = 0; i < rL.length; i++)
+                                        if (rL[i].userID == data.val().userID) {
+                                            rL.splice(i, 1);
+                                            break;
+                                        }
+
+
+                                    const i = indexFinder(this.state.polyline, leg[leg.length - 1]);
+                                    if (i != -1 && indexes[i])
+                                        if (indexes[i].values)
+                                            indexes[i].values.push({
+                                                userID: data.val().userID,
+                                                type: 'Destination',
+                                                coordinates: {
+                                                    latitude: leg[leg.length - 1][0],
+                                                    longitude: leg[leg.length - 1][1],
+                                                },
+                                            });
+
+                                    this.setState({ markers: markers, riderlocations: rL, indexes: indexes });
+
+                                }
+                                else if (data.val().status == 'STARTED') {
+                                    let markers = this.state.markers;
+                                    const leg = JSON.parse(data.val().details.tripDetails.leg);
+                                    this.updateResultsRemove('CR', data.val());
+                                    for (let i = 0; i < markers.length; i++)
+                                        if (markers[i].userID == data.val().userID && markers[i].type == 'Destination')
+                                            markers.splice(i, 1);
+
+                                    let indexes = this.state.indexes;//remove the destination portion
+                                    const i_d = indexFinder(this.state.polyline, leg[leg.length - 1]);
+                                    if (i_d != -1 && indexes[i_d])
+                                        if (indexes[i_d].values)
+                                            for (let i = 0; i < indexes[i_d].values.length; i++)
+                                                if (indexes[i_d].values[i].userID == data.val().userID && indexes[i_d].values[i].type == 'Destination')
+                                                    indexes[i_d].values.splice(i, 1);
+
+                                    this.setState({ markers: markers, indexes: indexes });
+                                }
+                            })
 
                         });
                     }
