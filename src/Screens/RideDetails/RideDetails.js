@@ -121,6 +121,7 @@ export default class RideDetails extends React.Component {
         });
     };
     componentDidMount() {
+       
     };
     sorter(a, b) {
         function numbergetter(time) {
@@ -198,7 +199,7 @@ export default class RideDetails extends React.Component {
 
 
                             <View style={[styles.calendar]}>
-                                <Text style={[styles.firstLayer, { color: colors.BLUE, fontSize: y(14), marginRight: x(5), }]}>{`10/07/2020`}</Text>
+                                <Text style={[styles.firstLayer, { color: colors.BLUE, fontSize: y(14), marginRight: x(5), }]}>{this.state.date}</Text>
                                 <Feather name={'calendar'} size={y(13)} color={colors.BLUE} />
                             </View>
 

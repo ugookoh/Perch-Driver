@@ -3,7 +3,7 @@ import styles from './styles';
 import { Animated, Text, View, Alert, StatusBar, TextInput, Dimensions, TouchableOpacity, } from 'react-native';
 import database from '@react-native-firebase/database';
 import * as turf from '@turf/turf';//for encoding polylines
-import { permissionLocation, scheduledCarpoolRequestCanceller, OfflineNotice, x, y, colors, height, width, dimensionAssert, polylineLenght, carpoolRatingHandler, cancelTrip } from '../../Functions/Functions'
+import { permissionLocation, scheduledCarpoolRequestCanceller, OfflineNotice, x, y, colors, height, width, dimensionAssert, polylineLenght, carpoolRatingHandler, cancelTrip, cancelScheduledTrip } from '../../Functions/Functions'
 import Header from '../../Components/Header/Header';
 import MapView, { PROVIDER_GOOGLE, Marker, AnimatedRegion, Polyline, Polygon } from 'react-native-maps';
 import MapStyle from '../../Components/MapStyle/MapStyle.json';
@@ -31,7 +31,6 @@ export default class SeeDetails extends React.Component {
     };
     componentDidMount() {
         this.mainAppend = this.props.route.params.mainAppend;
-
         if (this.state.scheduled && this.state.type == 'PendingRequests')
             database().ref(`scheduledCarpoolRequestsFromUsers/${this.state.data.details.tripDetails.driverID}/${this.state.data.details.userID}/status`).on('value', (data) => {
                 if (data.val() == null && this.state.alert === false) {
@@ -208,16 +207,19 @@ export default class SeeDetails extends React.Component {
 
                         {this.state.navigation == 'History' ?
                             <View style={styles.rating}>
-                                <Text style={styles.ratingText}>{this.state.currenStarDisplay == 'NOTRATED' ? `PLEASE RATE` : 'RATED'}</Text>
-                                <StarRating
-                                    disabled={!this.state.currenStarDisplay || typeof this.state.currenStarDisplay == 'number'}
-                                    maxStars={5}
-                                    rating={this.state.currenStarDisplay ? this.state.currenStarDisplay == 'NOTRATED' ? 0 : this.state.currenStarDisplay : 0}
-                                    fullStarColor={colors.GOLD}
-                                    emptyStarColor={colors.GOLD}
-                                    starSize={y(23)}
-                                    selectedStar={(rating) => this.onStarRatingPress(rating)}
-                                />
+                                {this.state.data.status == 'CANCELLED' ?
+                                    <Text style={[styles.ratingText, { color: colors.RED, fontSize: y(14) }]}>{'CANCELLED'}</Text> :
+                                    <>
+                                        <Text style={styles.ratingText}>{this.state.currenStarDisplay == 'NOTRATED' ? `PLEASE RATE` : 'RATED'}</Text>
+                                        <StarRating
+                                            disabled={!this.state.currenStarDisplay || typeof this.state.currenStarDisplay == 'number'}
+                                            maxStars={5}
+                                            rating={this.state.currenStarDisplay ? this.state.currenStarDisplay == 'NOTRATED' ? 0 : this.state.currenStarDisplay : 0}
+                                            fullStarColor={colors.GOLD}
+                                            emptyStarColor={colors.GOLD}
+                                            starSize={y(23)}
+                                            selectedStar={(rating) => this.onStarRatingPress(rating)}
+                                        /></>}
                             </View>
                             : <></>}
                     </View>
@@ -410,15 +412,26 @@ export default class SeeDetails extends React.Component {
                                                     .then(result => {
                                                         const driverName = JSON.parse(result).firstName;
                                                         //NOW
-                                                        cancelTrip.call(this,
-                                                            {
-                                                                userID: this.state.data.details.userID,
-                                                                type: 'driver',
-                                                                time: new Date().getTime(),
-                                                                riderName: this.state.data.details.firstName,
-                                                                driverName: driverName,
-                                                                driverID_: this.state.data.details.tripDetails.driverID,
-                                                            })
+                                                        if (this.state.scheduled)
+                                                            cancelScheduledTrip.call(this,
+                                                                {
+                                                                    userID: this.state.data.details.userID,
+                                                                    type: 'driver',
+                                                                    time: new Date().getTime(),
+                                                                    riderName: this.state.data.details.firstName,
+                                                                    driverName: driverName,
+                                                                    driverID_: this.state.data.details.tripDetails.driverID,
+                                                                })
+                                                        else
+                                                            cancelTrip.call(this,
+                                                                {
+                                                                    userID: this.state.data.details.userID,
+                                                                    type: 'driver',
+                                                                    time: new Date().getTime(),
+                                                                    riderName: this.state.data.details.firstName,
+                                                                    driverName: driverName,
+                                                                    driverID_: this.state.data.details.tripDetails.driverID,
+                                                                })
                                                     }).catch(error => {
                                                         Alert.alert('Storage error', `Error, ${error.message}`)
                                                     })

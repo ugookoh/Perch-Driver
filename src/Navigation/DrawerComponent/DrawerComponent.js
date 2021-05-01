@@ -47,39 +47,39 @@ export default class DrawerComponent extends React.Component {
                 }
             }).catch(error => { console.log(error.message) })
     };
-    componentDidUpdate() {
-        AsyncStorage.getItem('USER_DETAILS')
-            .then(r => {
-                if (r) {
-                    if (r !== JSON.stringify(this.state.userDetails ? this.state.userDetails : '')) {
-                        AsyncStorage.getItem('USER_DETAILS')
-                            .then(result => {
-                                if (result) {
-                                    const userDetails = JSON.parse(result);
-                                    this.setState({
-                                        userDetails: userDetails,
-                                    }, () => { this.setImage() })
-                                }
-                                else {
-                                    this.watchID = setInterval(() => {
-                                        AsyncStorage.getItem('USER_DETAILS')
-                                            .then((result_) => {
-                                                clearInterval(this.watchID);
-                                                const userDetails_ = JSON.parse(result_);
-                                                this.setState({
-                                                    userDetails: userDetails_,
-                                                }, () => { this.setImage() })
-                                            }).catch(error => { console.log(error.message) })
-                                    }, 300)
-                                }
-                            }).catch(error => { console.log(error.message) })
-                    }
+    // componentDidUpdate() {
+    //     AsyncStorage.getItem('USER_DETAILS')
+    //         .then(r => {
+    //             if (r) {
+    //                 if (r !== JSON.stringify(this.state.userDetails ? this.state.userDetails : '')) {
+    //                     AsyncStorage.getItem('USER_DETAILS')
+    //                         .then(result => {
+    //                             if (result) {
+    //                                 const userDetails = JSON.parse(result);
+    //                                 this.setState({
+    //                                     userDetails: userDetails,
+    //                                 }, () => { this.setImage() })
+    //                             }
+    //                             else {
+    //                                 this.watchID = setInterval(() => {
+    //                                     AsyncStorage.getItem('USER_DETAILS')
+    //                                         .then((result_) => {
+    //                                             clearInterval(this.watchID);
+    //                                             const userDetails_ = JSON.parse(result_);
+    //                                             this.setState({
+    //                                                 userDetails: userDetails_,
+    //                                             }, () => { this.setImage() })
+    //                                         }).catch(error => { console.log(error.message) })
+    //                                 }, 300)
+    //                             }
+    //                         }).catch(error => { console.log(error.message) })
+    //                 }
 
-                }
-            }).catch(error => { console.log(error.message) })
-    };
+    //             }
+    //         }).catch(error => { console.log(error.message) })
+    // };
     setImage = () => {
-        storage().ref(`${this.state.userDetails.photoRef}`).getDownloadURL()
+        storage().ref(`${this.props.userDetails ? this.props.userDetails.photoRef : this.state.userDetails.photoRef}`).getDownloadURL()
             .then(result => {
                 this.setState({ url: result })
             }).catch(error => { console.log(error.message) })
@@ -101,10 +101,10 @@ export default class DrawerComponent extends React.Component {
                                 }} />
                             : <></>}
                     </View>
-                    <Text style={styles.name}>{this.state.userDetails ? this.state.userDetails.firstName + ' ' + this.state.userDetails.lastName : ''}</Text>
-                    <Text style={styles.tripNo}>{`${this.state.userDetails ? this.props.choice == 'rideshare' ? this.state.userDetails.driverSummarizedHistory.rideshare.tripNumber : this.state.userDetails.driverSummarizedHistory.carpool.tripNumber : ''} Trips`}</Text>
+                    <Text style={styles.name}>{this.props.userDetails ? this.props.userDetails.firstName + ' ' + this.props.userDetails.lastName : ''}</Text>
+                    <Text style={styles.tripNo}>{`${this.props.userDetails ? this.props.choice == 'rideshare' ? this.props.userDetails.driverSummarizedHistory.rideshare.tripNumber : this.props.userDetails.driverSummarizedHistory.carpool.tripNumber : ''} Trips`}</Text>
                     <View style={[styles.rating, { alignItems: 'center' }]}>
-                        <Text style={styles.ratingText}>{`${this.state.userDetails ? this.props.choice == 'rideshare' ? Number(this.state.userDetails.driverSummarizedHistory.rideshare.rating).toFixed(1) : Number(this.state.userDetails.driverSummarizedHistory.carpool.rating).toFixed(1) : ''} `}</Text>
+                        <Text style={styles.ratingText}>{`${this.props.userDetails ? this.props.choice == 'rideshare' ? Number(this.props.userDetails.driverSummarizedHistory.rideshare.rating).toFixed(1) : Number(this.props.userDetails.driverSummarizedHistory.carpool.rating).toFixed(1) : ''} `}</Text>
                         <FontAwesome name={'star'} size={y(15)} color={'#FFC107'} />
                     </View>
                 </View>
@@ -122,7 +122,7 @@ export default class DrawerComponent extends React.Component {
 
                     <TouchableOpacity onPress={() => {
                         this.props.hideMenu();
-                        this.props.navigation.navigate('ScheduledTrips', { userDetails: this.state.userDetails })
+                        this.props.navigation.navigate('ScheduledTrips', { userDetails: this.props.userDetails })
                     }}>
                         <View style={styles.menuList}>
                             <AntDesign name={'calendar'} size={y(20)} style={styles.icons} />
@@ -145,7 +145,7 @@ export default class DrawerComponent extends React.Component {
 
                     <TouchableOpacity onPress={() => {
                         this.props.hideMenu();
-                        this.props.navigation.navigate('History', { userDetails: this.state.userDetails })
+                        this.props.navigation.navigate('History', { userDetails: this.props.userDetails })
                     }}>
                         <View style={styles.menuList}>
                             <MaterialCommunityIcons name={'history'} size={y(20)} style={styles.icons} />
@@ -158,7 +158,7 @@ export default class DrawerComponent extends React.Component {
                     <TouchableOpacity onPress={() => {
                         //this.props.hideMenu();
                         openBrowser(`https://perchrides.com/s/articles/help_and_frequently_asked_questions`);
-                        //this.props.navigation.navigate('GetFreeRides', { userDetails: this.state.userDetails });
+                        //this.props.navigation.navigate('GetFreeRides', { userDetails: this.props.userDetails });
                     }}>
                         <View style={styles.menuList}>
                             <Ionicons name={'clipboard-outline'} size={y(20)} style={styles.icons} />
@@ -170,7 +170,7 @@ export default class DrawerComponent extends React.Component {
                     <TouchableOpacity onPress={() => {
                         this.props.hideMenu();
                         this.props.navigation.navigate('Vehicles', {
-                            userDetails: this.state.userDetails,
+                            userDetails: this.props.userDetails,
                             changeVehicle: () => { },
                         });
                     }}>
@@ -187,7 +187,7 @@ export default class DrawerComponent extends React.Component {
                     <TouchableOpacity onPress={() => {
                         this.props.hideMenu();
                         this.props.navigation.navigate('Settings', {
-                            userDetails: this.state.userDetails,
+                            userDetails: this.props.userDetails,
                             onReturnFromSavedPlaces: () => { this.props.onReturnFromSavedPlaces(); }
                         });
                     }}>
