@@ -602,7 +602,35 @@ export function cancelTrip(toSend) {
         .then(() => {
             Alert.alert(
                 'The trip has been cancelled',
-                'We would reach out to you shortly regarding refunds and compensation. Contact us for further information.',
+                'We would reach out to you shortly regarding compensation. Contact us for further information.',
+                [{
+                    text: 'Done',
+                    style: 'cancel',
+                    onPress: () => {
+                        this.props.navigation.goBack();
+                    },
+                },
+                ])
+        })
+        .catch(() => {
+            Alert.alert(
+                'Cancel request failed',
+                'We failed to cancel this trip due to unknown reasons, please try again. Contact us for further help.',
+                [{
+                    text: 'Close',
+                    style: 'cancel',
+                },
+                ])
+        })
+};
+
+//CANCEL FUNCTION
+export function cancelScheduledTrip(toSend) {
+    axios.post(`https://us-central1-perch-01.cloudfunctions.net/cancelScheduledTrip`, toSend)
+        .then(() => {
+            Alert.alert(
+                'The trip has been cancelled',
+                'We would reach out to you shortly regarding compensation. Contact us for further information.',
                 [{
                     text: 'Done',
                     style: 'cancel',
