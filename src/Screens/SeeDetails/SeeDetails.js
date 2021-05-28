@@ -248,7 +248,7 @@ export default class SeeDetails extends React.Component {
                     <View style={[styles.divider, { marginTop: y(8) }]}><Divider height={0.5} width={x(343)} borderRadius={0} borderColor={'#707070'} borderWidth={0.5} /></View>
                     <View style={[styles.spaceView, { marginTop: y(15) }]}>
                         <Text style={[styles.total]}>Total</Text>
-                        <Text style={[styles.cash]}>{'$ 12.98'}</Text>
+                        <Text style={[styles.cash]}>${this.state.data.details.tripDetails.toPay.toFixed(2)}</Text>
                     </View>
                     <View style={[styles.divider, { marginTop: y(15) }]}><Divider height={0.5} width={x(343)} borderRadius={0} borderColor={'#707070'} borderWidth={0.5} /></View>
                     {this.state.navigation == 'SeeDetails' ?

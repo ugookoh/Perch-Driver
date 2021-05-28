@@ -80,7 +80,7 @@ export class PendingRequest extends React.Component {
                         <Text numberOfLines={1} style={[styles.riderDetails]}>{`${distance.toLowerCase()} • ${data.details.tripDetails.seatNumber} ${data.details.tripDetails.seatNumber == 1 ? 'person' : 'people'} • ${Number(data.details.history.rating).toFixed(1)}`}</Text>
                         <FontAwesome name={'star'} color={colors.GOLD} size={y(13)} style={{ marginLeft: x(5) }} />
                     </View>
-                    <Text style={[styles.cash]}>{`+ 15.60`}</Text>
+                    <Text style={[styles.cash]}>+ ${data.details.tripDetails.toPay.toFixed(2)}</Text>
                 </View>
                 <View>
                     {this.state.pending == false ?
@@ -344,7 +344,7 @@ export class AwaitingPickup extends React.Component {
                     <View style={[styles.distanceLeft, { width: x(120), marginTop: x(5) }]}>
                         <Text style={styles.distanceLeftText}>{`${data.details.tripDetails.depatureTime} pickup`}</Text>
                     </View>
-                    <Text style={[styles.cash, { marginTop: y(10), fontSize: y(25) }]}>{`+ 15.60`}</Text>
+                    <Text style={[styles.cash, { marginTop: y(10), fontSize: y(25) }]}>+ ${data.details.tripDetails.toPay.toFixed(2)}</Text>
                 </View>
                 <View>
                     {
@@ -538,7 +538,7 @@ export class CurrentRiders extends React.Component {
                         <Text numberOfLines={1} style={[styles.riderDetails]}>{`${distance.toLowerCase()} • ${data.details.tripDetails.seatNumber} ${data.details.tripDetails.seatNumber == 1 ? 'person' : 'people'} • ${Number(data.details.history.rating).toFixed(1)}`}</Text>
                         <FontAwesome name={'star'} color={colors.GOLD} size={y(13)} style={{ marginLeft: x(5) }} />
                     </View>
-                    <Text style={[styles.cash]}>{`+ 15.60`}</Text>
+                    <Text style={[styles.cash]}>+ ${data.details.tripDetails.toPay.toFixed(2)}</Text>
                     <View style={{ flexDirection: 'row' }}>
                         <View style={[styles.distanceLeft, { width: x(120) }]}>
                             <Text style={styles.distanceLeftText}>{`${data.details.tripDetails.arrivalTime} dropoff`}</Text>
@@ -607,7 +607,7 @@ export class SeeDetails extends React.Component {
                         <Text numberOfLines={1} style={[styles.riderDetails]}>{`${distance.toLowerCase()} • ${data.details.tripDetails.seatNumber} ${data.details.tripDetails.seatNumber == 1 ? 'person' : 'people'} • ${Number(data.details.history.rating).toFixed(1)}`}</Text>
                         <FontAwesome name={'star'} color={colors.GOLD} size={y(10)} style={{ marginLeft: x(3) }} />
                     </View>
-                    <Text style={[styles.cash, { fontSize: y(24) }]}>{`+ 15.60`}</Text>
+                    <Text style={[styles.cash, { fontSize: y(24) }]}>+ ${data.details.tripDetails.toPay.toFixed(2)}</Text>
 
                 </View>
                 <View style={{ alignItems: 'flex-end' }}>
