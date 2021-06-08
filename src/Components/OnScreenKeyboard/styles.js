@@ -15,12 +15,12 @@ export default StyleSheet.create({
     },
     text: {
         fontFamily: 'Comfortaa-Bold',
-        fontSize: y(20),
+        fontSize: y(20, true),
         //backgroundColor:'red',
-        padding:x(13),
+        padding: x(13),
     },
-    icon:{
-        padding:x(13),
+    icon: {
+        padding: x(13),
         //backgroundColor:'red'
     },
 });

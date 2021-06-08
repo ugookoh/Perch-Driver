@@ -29,7 +29,7 @@ export default StyleSheet.create({
     },
     text: {
         fontFamily: 'Gilroy-SemiBold',
-        fontSize: y(16),
+        fontSize: y(16, true),
         width: x(250),
         color: colors.BLUE_FONT,
         //backgroundColor:'red',
@@ -51,6 +51,6 @@ export default StyleSheet.create({
     },
     distanceText: {
         fontFamily: 'Gilroy-Bold',
-        fontSize: y(13),
+        fontSize: y(13, true),
     },
 });

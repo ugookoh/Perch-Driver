@@ -9,7 +9,7 @@ export default StyleSheet.create({
     },
     title: {
         fontFamily: 'Gilroy-ExtraBold',
-        fontSize: y(20),
+        fontSize: y(20, true),
         color: colors.BLUE_FONT,
         width: x(343),
     },
@@ -21,11 +21,11 @@ export default StyleSheet.create({
         width: x(313),
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingVertical:y(6),
+        paddingVertical: y(6),
     },
     text: {
         fontFamily: 'Gilroy-Regular',
-        fontSize: y(16),
+        fontSize: y(16, true),
         color: colors.BLUE_FONT,
     },
 

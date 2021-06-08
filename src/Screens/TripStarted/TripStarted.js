@@ -1341,7 +1341,7 @@ export default class TripStarted extends React.Component {
                     </Animated.View>
 
 
-                    <Text style={[styles.semiBold, { color: colors.BLUE_FONT, fontSize: y(16), width: x(313), marginTop: y(17.5) }]}>Vehicle</Text>
+                    <Text style={[styles.semiBold, { color: colors.BLUE_FONT, fontSize: y(16, true), width: x(313), marginTop: y(17.5) }]}>Vehicle</Text>
                     <View style={{ marginTop: y(8) }}>
                         <ViewVehicle vehicle={this.state.vehicle} />
                     </View>

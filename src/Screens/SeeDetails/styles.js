@@ -71,7 +71,7 @@ export default StyleSheet.create({
     bubbleText: {
         color: colors.WHITE,
         fontFamily: 'Gilroy-ExtraBold',
-        fontSize: y(14),
+        fontSize: y(14, true),
         maxHeight: x(60),
     },
     spaceView: {
@@ -88,18 +88,18 @@ export default StyleSheet.create({
         borderRadius: 8,
     },
     text: {
-        fontSize: y(15),
+        fontSize: y(15, true),
         fontFamily: 'Gilroy-Regular',
     },
     textAddress: {
-        fontSize: y(15),
+        fontSize: y(15, true),
         fontFamily: 'Gilroy-Medium',
         width: x(190),
         textAlign: 'right'
     },
     title: {
         fontFamily: 'Gilroy-ExtraBold',
-        fontSize: y(20),
+        fontSize: y(20, true),
         color: colors.BLUE_FONT,
     },
     divider: {
@@ -107,13 +107,13 @@ export default StyleSheet.create({
         opacity: 0.25,
     },
     total: {
-        fontSize: y(21),
+        fontSize: y(21, true),
         fontFamily: 'Gilroy-SemiBold',
     },
     cash: {
         color: colors.GREEN,
         fontFamily: 'Gilroy-Bold',
-        fontSize: y(21),
+        fontSize: y(21, true),
     },
     button: {
         height: y(dimensionAssert() ? 50 : 55),
@@ -124,7 +124,7 @@ export default StyleSheet.create({
     },
     buttonText: {
         color: colors.WHITE,
-        fontSize: y(15),
+        fontSize: y(15, true),
         fontFamily: 'Gilroy-ExtraBold',
     },
     help: {
@@ -153,14 +153,14 @@ export default StyleSheet.create({
     tripTitle: {
         fontFamily: 'Gilroy-ExtraBold',
         color: colors.BLACK,
-        fontSize: y(20),
+        fontSize: y(20, true),
         zIndex: 2,
     },
     firstLayer: {
         fontFamily: 'Gilroy-Medium',
         color: colors.BLACK,
 
-        fontSize: y(15),
+        fontSize: y(15, true),
         zIndex: 2,
     },
     rating: {
@@ -169,7 +169,7 @@ export default StyleSheet.create({
 
     },
     ratingText: {
-        fontSize: y(10),
+        fontSize: y(10, true),
         fontFamily: 'Gilroy-Bold',
         color: colors.GOLD,
         marginRight: x(5),

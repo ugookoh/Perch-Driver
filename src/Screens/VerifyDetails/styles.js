@@ -5,18 +5,18 @@ export default StyleSheet.create({
   container: {
     backgroundColor: colors.WHITE,
     flex: 1,
-    alignItems:'center',
+    alignItems: 'center',
   },
   title: {
     fontFamily: 'Gilroy-ExtraBold',
-    fontSize: y(20),
+    fontSize: y(20, true),
     color: colors.BLUE_FONT,
     width: x(343),
-},
-divider: {
+  },
+  divider: {
     alignItems: 'center',
     opacity: 0.25,
-},
+  },
   logo: {
     position: 'absolute',
     left: x(162.02),
@@ -31,7 +31,7 @@ divider: {
     width: width,
   },
   sinUpText: {
-    fontSize: y(30),
+    fontSize: y(30, true),
     lineHeight: y(36),
     textAlign: 'center',
     fontFamily: 'Gilroy-SemiBold',
@@ -43,14 +43,14 @@ divider: {
     alignItems: 'center',
   },
   regularText: {
-    fontSize: y(15),
+    fontSize: y(15, true),
     lineHeight: y(25),
     textAlign: 'center',
     fontFamily: 'Gilroy-Medium',
   },
   messageText: {
     fontFamily: 'Gilroy-Regular',
-    fontSize: y(15),
+    fontSize: y(15, true),
   },
   messageView: {
     position: 'absolute',
@@ -68,8 +68,8 @@ divider: {
   },
   button: {
     top: y(655),
-    position:'absolute',
-    width:width,
-    alignItems:'center',
+    position: 'absolute',
+    width: width,
+    alignItems: 'center',
   },
 });

@@ -30,7 +30,7 @@ export default StyleSheet.create({
     },
     tag: {
         fontFamily: 'Gilroy-ExtraBold',
-        fontSize: y(12),
+        fontSize: y(12, true),
     },
     textInputContainer: {
         width: x(340),
@@ -42,7 +42,7 @@ export default StyleSheet.create({
     },
     textInput: {
         fontFamily: 'Gilroy-Regular',
-        fontSize: y(21),
+        fontSize: y(21, true),
         //backgroundColor:'red',
         width: x(290),
         color: colors.BLUE_FONT,
@@ -68,7 +68,7 @@ export default StyleSheet.create({
     delete: {
         //marginTop: y(10),
         fontFamily: 'Gilroy-SemiBold',
-        fontSize: y(20),
+        fontSize: y(20, true),
         color: '#FF0000',
     },
     button: {

@@ -8,7 +8,7 @@ export default StyleSheet.create({
     },
     issueChoice: {
         fontFamily: 'Gilroy-SemiBold',
-        fontSize: y(15),
+        fontSize: y(15, true),
         marginLeft: x(6),
     },
     formContainer: {
@@ -32,7 +32,7 @@ export default StyleSheet.create({
     },
     feedbackTitle: {
         fontFamily: 'Gilroy-Bold',
-        fontSize: y(20),
+        fontSize: y(20, true),
         marginVertical: y(13),
     },
     picker: {
@@ -47,9 +47,7 @@ export default StyleSheet.create({
     },
     textInput: {
         fontFamily: 'Gilroy-Regular',
-        fontSize: y(15),
-
-
+        fontSize: y(15, true),
     },
     dropDown: {
         position: 'absolute',
@@ -90,21 +88,21 @@ export default StyleSheet.create({
         width: width,
         height: y(250),
     },
-    pM:{
-        width:x(343),
-        fontFamily:'Gilroy-Bold',
-        fontSize:y(17),
-        marginTop:y(70)
+    pM: {
+        width: x(343),
+        fontFamily: 'Gilroy-Bold',
+        fontSize: y(17, true),
+        marginTop: y(70)
     },
-    pMView:{
-        backgroundColor:'rgba(145, 134, 134, 0.5)',
-        width:width,
-        padding:y(10),
-        alignItems:'center',
+    pMView: {
+        backgroundColor: 'rgba(145, 134, 134, 0.5)',
+        width: width,
+        padding: y(10),
+        alignItems: 'center',
     },
-    pM_:{
-        width:x(343),
-        fontFamily:'Gilroy-Regular',
-        fontSize:y(13),
+    pM_: {
+        width: x(343),
+        fontFamily: 'Gilroy-Regular',
+        fontSize: y(13, true),
     },
 });

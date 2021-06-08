@@ -20,12 +20,12 @@ export default class HistoryComponent extends React.Component {
         const data = this.props.data;
 
         if (data.trips) {
-            let passNo = 0;
-            let distance = 0;
+            let passNo = 0, distance = 0, totalPay = 0;
 
             for (let key in data.trips) {
                 passNo += data.trips[key].details.tripDetails.seatNumber;
-                distance += (polylineLenght(JSON.parse(data.trips[key].details.tripDetails.leg))*data.trips[key].details.tripDetails.seatNumber);//seat no * distance
+                totalPay += data.trips[key].details.tripDetails.toPay;
+                distance += (polylineLenght(JSON.parse(data.trips[key].details.tripDetails.leg)) * data.trips[key].details.tripDetails.seatNumber);//seat no * distance
             };
             //distance = distance * passNo;
             distance > 100 ?
@@ -35,7 +35,7 @@ export default class HistoryComponent extends React.Component {
                 details: {
                     distance: distance.toLowerCase(),
                     passNo: `${passNo} ${passNo == 1 ? 'person' : 'people'}`,
-                    total: '$213.00',
+                    totalPay: `$${totalPay}`
                 },
                 loaded: true,
             });
@@ -44,7 +44,7 @@ export default class HistoryComponent extends React.Component {
                 details: {
                     distance: '0.0 m',
                     passNo: '0 people',
-                    total: '$0.00',
+                    totalPay: '$0.00',
                 },
                 loaded: true,
             });
@@ -60,7 +60,7 @@ export default class HistoryComponent extends React.Component {
                         data: data,
                         date: this.props.date,
                         details: this.state.details,
-                        mainAppend:this.props.mainAppend,
+                        mainAppend: this.props.mainAppend,
                     });
             }}>
                 <View style={[styles.fromTo]}>
@@ -84,7 +84,7 @@ export default class HistoryComponent extends React.Component {
                     </ShimmerPlaceHolder>
 
                     <ShimmerPlaceHolder autoRun={true} visible={this.state.loaded} style={{ width: x(50), height: y(17), marginTop: y(1) }} colorShimmer={['#03cc00', '#82ff80', '#03cc00']}>
-                        <Text style={[styles.cash]}>{this.state.details ? this.state.details.total : ''}</Text>
+                        <Text style={[styles.cash]}>{this.state.details ? this.state.details.totalPay : ''}</Text>
                     </ShimmerPlaceHolder>
                 </View>
             </TouchableOpacity>

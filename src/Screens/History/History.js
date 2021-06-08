@@ -76,7 +76,7 @@ export default class History extends React.Component {
             database().ref(`driverHistory/${this.state.userDetails.userID}/carpool/${this.state.year}/${this.state.month}`).once('value', data => {
                 this.setState({ result: data.val() ? data.val() : 'NORESULTS' });
 
-                let passengerNo = 0, distance = 0, totalM = '$279.90';
+                let passengerNo = 0, distance = 0, totalPay = 0;
 
                 for (let k in data.val()) {
                     const d = data.val()[k].trips;
@@ -85,8 +85,7 @@ export default class History extends React.Component {
                     for (let key in d) {
                         passengerNo += d[key].details.tripDetails.seatNumber;
                         distance += polylineLenght(JSON.parse(d[key].details.tripDetails.leg)) * d[key].details.tripDetails.seatNumber;
-                        //work on cash here
-
+                        totalPay += d[key].details.tripDetails.toPay;
                     };
                 };
                 distance > 100 ?
@@ -97,7 +96,7 @@ export default class History extends React.Component {
                     summary: {
                         distance: distance.toLowerCase(),
                         passengerNo: `${passengerNo} ${passengerNo == 1 ? 'person' : 'people'}`,
-                        totalM: totalM,
+                        totalPay: totalPay,
                     },
                 })
             });
@@ -161,7 +160,7 @@ export default class History extends React.Component {
         })
         return (
             <View style={styles.container}>
-                 <OfflineNotice navigation={this.props.navigation} screenName={this.props.route.name} />
+                <OfflineNotice navigation={this.props.navigation} screenName={this.props.route.name} />
                 <Header name={'History'} scrollY={this.state.scrollY} onPress={() => { this.props.navigation.goBack() }} />
                 <View style={[styles.spaceView, { marginTop: y(28), alignItems: 'baseline' }]}>
                     <Text style={[styles.title,]}>Carpool history</Text>
@@ -204,7 +203,7 @@ export default class History extends React.Component {
                                 <View style={styles.noresult}>
                                     <NoResultCatcus />
                                 </View>
-                                <Text style={[styles.loadingText, { fontSize: y(17), marginTop: y(10), }]}>No trips have been made today.</Text>
+                                <Text style={[styles.loadingText, { fontSize: y(17, true), marginTop: y(10), }]}>No trips have been made today.</Text>
                             </View>
                         : <MaterialIndicator size={y(100)} color={colors.BLUE} />}
                 </View>
@@ -310,12 +309,12 @@ export default class History extends React.Component {
                                         <View style={[styles.spaceView, { marginTop: y(11), marginBottom: y(40) }]}>
                                             <Text style={[styles.bigText, { color: colors.BLUE_FONT }]}>{`TOTAL`}</Text>
                                             <ShimmerPlaceHolder autoRun={true} visible={this.state.summary ? true : false} style={{ width: x(80), height: y(26) }} colorShimmer={['#03cc00', '#82ff80', '#03cc00']}>
-                                                <Text style={[styles.bigText, { color: colors.GREEN }]}>{this.state.summary ? this.state.summary.totalM : ''}</Text>
+                                                <Text style={[styles.bigText, { color: colors.GREEN }]}>{this.state.summary ? `$${(this.state.summary.totalPay).toFixed(2)}` : ''}</Text>
                                             </ShimmerPlaceHolder>
                                         </View>
                                     </Animated.View > :
                                     <Animated.View style={[styles.noResultLoad, { opacity: opacity }]}>
-                                        <Text style={[styles.loadingText, { fontSize: y(24) }]}>You have not made any trips today...strange.</Text>
+                                        <Text style={[styles.loadingText, { fontSize: y(24, true) }]}>You have not made any trips today...strange.</Text>
                                     </Animated.View>
                                 : <Animated.View style={[styles.noResultLoad, { opacity: opacity }]}>
                                     <PacmanIndicator color={colors.BLUE} size={y(90)} />

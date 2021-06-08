@@ -16,11 +16,11 @@ export default StyleSheet.create({
     },
     optionText: {
         fontFamily: 'Gilroy-Regular',
-        fontSize: y(20),
+        fontSize: y(20, true),
     },
     signOut: {
         fontFamily: 'Gilroy-SemiBold',
-        fontSize: y(20),
+        fontSize: y(20, true),
         color: colors.RED,
     },
     cIC: {

@@ -132,14 +132,13 @@ export default StyleSheet.create({
     tripTitle: {
         fontFamily: 'Gilroy-ExtraBold',
         color: colors.BLACK,
-        fontSize: y(20),
+        fontSize: y(20, true),
         zIndex: 2,
     },
     firstLayer: {
         fontFamily: 'Gilroy-Medium',
         color: colors.BLACK,
-
-        fontSize: y(15),
+        fontSize: y(15, true),
         zIndex: 2,
     },
     divider: {
@@ -152,7 +151,7 @@ export default StyleSheet.create({
     total: {
         fontFamily: 'Gilroy-ExtraBold',
         color: colors.BLACK,
-        fontSize: y(22),
+        fontSize: y(22, true),
         zIndex: 2,
         color: colors.BLUE
     },
@@ -162,7 +161,7 @@ export default StyleSheet.create({
     },
     cardNumber: {
         fontFamily: 'Gilroy-Regular',
-        fontSize: y(15),
+        fontSize: y(15, true),
         bottom: -x(15)
     },
     visa: {

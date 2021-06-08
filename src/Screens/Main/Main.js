@@ -75,7 +75,7 @@ export default class Main extends React.Component {
             homeAddress: null,
 
             rerender: '',
-            vehicle: 'LOADING...'
+            status: 'LOADING...',
 
         };
 

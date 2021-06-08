@@ -29,7 +29,7 @@ export default styles = StyleSheet.create({
     },
     text: {
         position: 'absolute',
-        fontSize: y(34),
+        fontSize: y(34, true),
         color: colors.WHITE,
         fontFamily: 'Gilroy-ExtraBold',
     },

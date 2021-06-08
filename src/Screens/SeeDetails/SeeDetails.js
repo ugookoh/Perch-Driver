@@ -208,7 +208,7 @@ export default class SeeDetails extends React.Component {
                         {this.state.navigation == 'History' ?
                             <View style={styles.rating}>
                                 {this.state.data.status == 'CANCELLED' ?
-                                    <Text style={[styles.ratingText, { color: colors.RED, fontSize: y(14) }]}>{'CANCELLED'}</Text> :
+                                    <Text style={[styles.ratingText, { color: colors.RED, fontSize: y(14, true) }]}>{'CANCELLED'}</Text> :
                                     <>
                                         <Text style={styles.ratingText}>{this.state.currenStarDisplay == 'NOTRATED' ? `PLEASE RATE` : 'RATED'}</Text>
                                         <StarRating

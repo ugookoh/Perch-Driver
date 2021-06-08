@@ -32,7 +32,7 @@ export default StyleSheet.create({
     },
     title: {
         fontFamily: 'Gilroy-ExtraBold',
-        fontSize: y(20),
+        fontSize: y(20, true),
         color: colors.BLUE_FONT,
     },
     divider: {
@@ -45,11 +45,11 @@ export default StyleSheet.create({
         flexDirection: 'row',
     },
     text: {
-        fontSize: y(15),
+        fontSize: y(15, true),
         fontFamily: 'Gilroy-Regular',
     },
     textAddress: {
-        fontSize: y(15),
+        fontSize: y(15, true),
         fontFamily: 'Gilroy-Medium',
     },
     semiBold: {
@@ -78,7 +78,7 @@ export default StyleSheet.create({
     statusText: {
         color: colors.WHITE,
         fontFamily: 'Gilroy-ExtraBold',
-        fontSize: y(15),
+        fontSize: y(15, true),
         paddingVertical: x(4),
         paddingHorizontal: x(8),
     },
@@ -106,7 +106,7 @@ export default StyleSheet.create({
     bubbleText: {
         color: colors.WHITE,
         fontFamily: 'Gilroy-ExtraBold',
-        fontSize: y(14),
+        fontSize: y(14, true),
         maxHeight: x(60),
     },
     cont1: {
@@ -161,7 +161,7 @@ export default StyleSheet.create({
     },
     buttonText: {
         fontFamily: 'Gilroy-Bold',
-        fontSize: y(15),
+        fontSize: y(15, true),
     },
     zoomIcon: {
         position: 'absolute',
@@ -194,7 +194,7 @@ export default StyleSheet.create({
     },
     noResultText: {
         fontFamily: 'Gilroy-Bold',
-        fontSize: y(20),
+        fontSize: y(20, true),
         color: colors.BLUE_FONT,
         textAlign: 'center',
     },
@@ -223,7 +223,7 @@ export default StyleSheet.create({
     recenter: {
         color: colors.BLUE_FONT,
         fontFamily: 'Gilroy-Bold',
-        fontSize: y(12),
+        fontSize: y(12, true),
     },
     speaker: {
         height: y(20),
