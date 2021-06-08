@@ -27,7 +27,7 @@ export default StyleSheet.create({
     fromToText: {
         fontFamily: 'Gilroy-Bold',
         color: colors.BLUE,
-        fontSize: y(12),
+        fontSize: y(12, true),
     },
     divider: {
         alignItems: 'center',
@@ -39,7 +39,7 @@ export default StyleSheet.create({
     },
     addressText: {
         fontFamily: 'Gilroy-Regular',
-        fontSize: y(14),
+        fontSize: y(14, true),
         color: colors.BLUE_FONT,
         width: x(210),
         paddingLeft: x(5),
@@ -55,13 +55,13 @@ export default StyleSheet.create({
     },
     text: {
         fontFamily: 'Gilroy-SemiBold',
-        fontSize: y(13),
+        fontSize: y(13, true),
         color: colors.BLUE_FONT,
     },
     cash: {
         color: colors.GREEN,
         fontFamily: 'Gilroy-Bold',
-        fontSize: y(17),
+        fontSize: y(17, true),
         marginTop: y(dimensionAssert() ? 1 : 4),
     },
 });

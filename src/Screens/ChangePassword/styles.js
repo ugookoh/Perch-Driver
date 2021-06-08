@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions, StatusBar, Platform } from 'react-native';
-import { x, y, colors, height, width ,dimensionAssert} from '../../Functions/Functions';
+import { x, y, colors, height, width, dimensionAssert } from '../../Functions/Functions';
 
 export default StyleSheet.create({
     container: {
@@ -20,7 +20,7 @@ export default StyleSheet.create({
     },
     textInput: {
         fontFamily: 'Gilroy-Regular',
-        fontSize: y(15),
+        fontSize: y(15, true),
 
         height: y(48),
         width: x(322),
@@ -32,21 +32,21 @@ export default StyleSheet.create({
     },
     fP: {
         fontFamily: 'Gilroy-Medium',
-        fontSize: y(15),
+        fontSize: y(15, true),
         bottom: x(-3)
     },
     vE: {
         fontFamily: 'Gilroy-ExtraBold',
-        fontSize: y(15),
+        fontSize: y(15, true),
         textDecorationLine: 'underline',
         color: colors.BLUE,
         marginLeft: x(5),
     },
     error: {
         fontFamily: 'Gilroy-SemiBold',
-        fontSize: y(15),
+        fontSize: y(15, true),
         color: colors.RED,
-        textAlign:'center',
+        textAlign: 'center',
 
     },
     choices: {

@@ -312,14 +312,14 @@ export default class TripBreakdown extends React.Component {
                                         <Text style={[styles.textAddress, this.state.now ? {} : s]}>{`${moment(this.state.date).format('hh:mm a')} ${this.state.tomorrow ? 'tomorrow' : 'today'}`}</Text>
                                     </TouchableOpacity>
                                 </View>
-                                <Text style={[styles.semiBold, { fontSize: y(10) }]}>{`You can schedule trips from 15 minutes to 24 hours in advance. Any time prior to 15 minutes in advance would be treated as the next day`}</Text>
+                                <Text style={[styles.semiBold, { fontSize: y(10, true) }]}>{`You can schedule trips from 15 minutes to 24 hours in advance. Any time prior to 15 minutes in advance would be treated as the next day`}</Text>
                             </>
                     }
 
 
                     <Text style={[styles.title, { marginTop: y(20) }]}>Trip options</Text>
                     <View style={[styles.divider, { marginTop: y(9) }]}><Divider height={0.5} width={x(343)} borderRadius={0} borderColor={'#707070'} borderWidth={0.5} /></View>
-                    <Text style={[styles.semiBold, { color: colors.BLUE_FONT, fontSize: y(16), width: x(313), marginTop: y(17.5) }]}>Vehicle</Text>
+                    <Text style={[styles.semiBold, { color: colors.BLUE_FONT, fontSize: y(16, true), width: x(313), marginTop: y(17.5) }]}>Vehicle</Text>
                     <View style={{ marginTop: y(8) }}>
                         <ChangeVehicle vehicle={this.state.vehicle}
                             changeVehicle={(value) => {
@@ -327,7 +327,7 @@ export default class TripBreakdown extends React.Component {
                             }}
                             navigation={this.props.navigation} />
                     </View>
-                    <Text style={[styles.semiBold, { color: colors.BLUE_FONT, fontSize: y(16), width: x(313), marginTop: y(23) }]}>Passengers</Text>
+                    <Text style={[styles.semiBold, { color: colors.BLUE_FONT, fontSize: y(16, true), width: x(313), marginTop: y(23) }]}>Passengers</Text>
 
                     <View style={[styles.spaceViewLower, { marginTop: y(8) }]}>
                         <View>
@@ -447,7 +447,7 @@ export default class TripBreakdown extends React.Component {
                                     if (date) {
                                         const advance15mins = new Date().getTime() + (15 * 60000);//15 mins in advance
 
-                                        this.setState({ date: d, tomorrow: d > advance15mins ? false : true })
+                                        this.setState({ date: new Date(d), tomorrow: d > advance15mins ? false : true })
                                     }
                                 }}
                             />
@@ -476,7 +476,7 @@ export default class TripBreakdown extends React.Component {
                                 if (date) {
                                     const advance15mins = new Date().getTime() + (15 * 60000);//15 mins in advance
 
-                                    this.setState({ date: d, tomorrow: d > advance15mins ? false : true })
+                                    this.setState({ date: new Date(d), tomorrow: d > advance15mins ? false : true })
                                 }
                             }}
                         /> : <></>}

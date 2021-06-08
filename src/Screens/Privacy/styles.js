@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions, StatusBar, Platform } from 'react-native';
-import { x, y, colors, height, width,dimensionAssert } from '../../Functions/Functions';
+import { x, y, colors, height, width, dimensionAssert } from '../../Functions/Functions';
 export default StyleSheet.create({
     container: {
         flex: 1,
@@ -15,11 +15,11 @@ export default StyleSheet.create({
     },
     text: {
         fontFamily: 'Gilroy-Regular',
-        fontSize: y(21),
+        fontSize: y(21, true),
     },
     delete: {
         fontFamily: 'Gilroy-SemiBold',
-        fontSize: y(21),
+        fontSize: y(21, true),
         color: colors.RED,
     },
 

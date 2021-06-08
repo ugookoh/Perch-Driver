@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions, StatusBar, Platform } from 'react-native';
-import { x, y, colors, dimensionAssert,height,width } from '../../Functions/Functions';
+import { x, y, colors, dimensionAssert, height, width } from '../../Functions/Functions';
 export default StyleSheet.create({
     container: {
         backgroundColor: colors.WHITE,
@@ -27,13 +27,13 @@ export default StyleSheet.create({
         paddingHorizontal: x(12.5),
     },
     sinUpText: {
-        fontSize: y(30),
+        fontSize: y(30, true),
         lineHeight: y(36),
         textAlign: 'center',
         fontFamily: 'Gilroy-SemiBold',
     },
     regularText: {
-        fontSize: y(15),
+        fontSize: y(15, true),
         lineHeight: y(20),
         textAlign: 'center',
         fontFamily: 'Gilroy-Medium',
@@ -50,7 +50,7 @@ export default StyleSheet.create({
     logoutText: {
         textDecorationLine: 'underline',
         color: colors.RED,
-        fontSize: y(15),
+        fontSize: y(15, true),
         fontFamily: 'Gilroy-Bold',
     },
     image: {

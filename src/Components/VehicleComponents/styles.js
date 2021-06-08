@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions, StatusBar, Platform } from 'react-native';
-import { x, y, colors, height, width,dimensionAssert } from '../../Functions/Functions';
+import { x, y, colors, height, width, dimensionAssert } from '../../Functions/Functions';
 export default StyleSheet.create({
     cont1: {
         backgroundColor: colors.WHITE,
@@ -15,7 +15,7 @@ export default StyleSheet.create({
         shadowRadius: 4.65,
 
         elevation: 2,
-        
+
 
 
     },
@@ -31,7 +31,7 @@ export default StyleSheet.create({
 
         justifyContent: 'center',
         alignItems: 'center',
-        overflow:'hidden',
+        overflow: 'hidden',
 
     },
     pic2: {
@@ -42,20 +42,20 @@ export default StyleSheet.create({
         borderBottomLeftRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
-        overflow:'hidden',
+        overflow: 'hidden',
 
     },
 
     text1: {
         fontFamily: 'Gilroy-SemiBold',
         color: colors.BLUE_FONT,
-        fontSize: y(15),
+        fontSize: y(15, true),
         width: x(150),
     },
     pN1: {
         color: colors.BLUE_FONT,
         fontFamily: 'Gilroy-Bold',
-        fontSize: y(18),
+        fontSize: y(18, true),
         position: 'absolute',
         top: y(10),
         right: x(10),
@@ -66,7 +66,7 @@ export default StyleSheet.create({
     },
     verify: {
         fontFamily: 'Gilroy-ExtraBold',
-        fontSize: y(12),
+        fontSize: y(12, true),
         alignSelf: 'flex-end',
         bottom: x(10)
     },
@@ -82,7 +82,7 @@ export default StyleSheet.create({
     },
     addVehicleText: {
         fontFamily: 'Gilroy-SemiBold',
-        fontSize: y(15),
+        fontSize: y(15, true),
         color: colors.BLUE_FONT,
     },
 });

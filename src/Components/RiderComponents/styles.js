@@ -14,7 +14,7 @@ export default StyleSheet.create({
     },
     name: {
         fontFamily: 'Gilroy-SemiBold',
-        fontSize: y(15),
+        fontSize: y(15, true),
     },
     button1: {
         width: x(81),
@@ -35,7 +35,7 @@ export default StyleSheet.create({
     },
     buttonText: {
         fontFamily: 'Gilroy-ExtraBold',
-        fontSize: y(14),
+        fontSize: y(14, true),
     },
     buttonCont1: {
         width: x(170),
@@ -47,12 +47,12 @@ export default StyleSheet.create({
     },
     riderDetails: {
         fontFamily: 'Gilroy-Regular',
-        fontSize: y(13),
+        fontSize: y(13, true),
     },
     cash: {
         color: colors.GREEN,
         fontFamily: 'Gilroy-ExtraBold',
-        fontSize: y(dimensionAssert() ? 20 : 17),
+        fontSize: y(dimensionAssert() ? 20 : 17, true),
     },
     timer1: {
         width: x(170),
@@ -85,7 +85,7 @@ export default StyleSheet.create({
     text: {
         color: colors.BLUE,
         fontFamily: 'Gilroy-Bold',
-        fontSize: y(dimensionAssert() ? 11 : 12),
+        fontSize: y(dimensionAssert() ? 11 : 12, true),
         textAlign: 'center',
     },
     distanceLeft: {
@@ -105,7 +105,7 @@ export default StyleSheet.create({
     },
     distanceLeftText: {
         fontFamily: 'Gilroy-Bold',
-        fontSize: y(13),
+        fontSize: y(13, true),
         color: colors.BLUE,
     },
 });

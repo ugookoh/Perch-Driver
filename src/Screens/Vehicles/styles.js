@@ -8,7 +8,7 @@ export default StyleSheet.create({
     },
     title: {
         fontFamily: 'Gilroy-ExtraBold',
-        fontSize: y(20),
+        fontSize: y(20, true),
         color: colors.BLUE_FONT,
         width: x(343),
     },

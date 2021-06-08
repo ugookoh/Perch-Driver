@@ -8,7 +8,7 @@ export default StyleSheet.create({
     },
     title: {
         fontFamily: 'Gilroy-ExtraBold',
-        fontSize: y(20),
+        fontSize: y(20, true),
         color: colors.BLUE_FONT,
 
     },
@@ -19,7 +19,7 @@ export default StyleSheet.create({
     },
     dateText: {
         fontFamily: 'Gilroy-Medium',
-        fontSize: y(16),
+        fontSize: y(16, true),
         color: colors.BLUE,
         marginRight: x(10),
     },
@@ -67,11 +67,11 @@ export default StyleSheet.create({
     },
     text: {
         fontFamily: 'Gilroy-SemiBold',
-        fontSize: y(16),
+        fontSize: y(16, true),
     },
     bigText: {
         fontFamily: 'Gilroy-Bold',
-        fontSize: y(26),
+        fontSize: y(26, true),
     },
     tab: {
         backgroundColor: colors.GREY_TAB,
@@ -97,7 +97,7 @@ export default StyleSheet.create({
     },
     loadingText: {
         fontFamily: 'Gilroy-Medium',
-        fontSize: y(22),
+        fontSize: y(22, true),
         color: colors.BLUE_FONT,
         textAlign: 'center',
     },

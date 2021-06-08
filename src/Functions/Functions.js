@@ -268,8 +268,8 @@ export class OfflineNotice extends React.Component {
             <>
                 <Animated.View style={[{ width: width, alignItems: 'center', position: 'absolute', zIndex: 10, elevation: 10 }, this.position.getLayout()]}>
                     <View style={{ height: y(100), borderRadius: 10, width: x(313), backgroundColor: RED, justifyContent: 'space-around', alignItems: 'center', paddingVertical: y(20) }}>
-                        <Text style={{ fontFamily: 'Gilroy-ExtraBold', fontSize: y(18), color: WHITE }}>There is no internet connection</Text>
-                        <Text style={{ fontFamily: 'Gilroy-SemiBold', fontSize: y(14), color: WHITE }}>Your device is currently offline</Text>
+                        <Text style={{ fontFamily: 'Gilroy-ExtraBold', fontSize: y(18, true), color: WHITE }}>There is no internet connection</Text>
+                        <Text style={{ fontFamily: 'Gilroy-SemiBold', fontSize: y(14, true), color: WHITE }}>Your device is currently offline</Text>
                     </View>
                 </Animated.View>
 
@@ -277,8 +277,8 @@ export class OfflineNotice extends React.Component {
                     <></> :
                     <Animated.View style={[{ width: width, alignItems: 'center', position: 'absolute', zIndex: 11, elevation: 11 }, this.position_.getLayout()]}>
                         <View style={{ height: y(dimensionAssert() ? 740 : 700), borderRadius: 10, width: x(343), backgroundColor: LIGHT_BLUE, alignItems: 'center', }}>
-                            <Text style={{ fontFamily: 'Gilroy-ExtraBold', fontSize: y(18), color: WHITE, marginTop: y(37) }}>You did not provide location access</Text>
-                            <Text style={{ fontFamily: 'Gilroy-Regular', lineHeight: y(22), fontSize: y(14), color: WHITE, width: '100%', paddingHorizontal: x(10), textAlign: 'center', marginTop: y(24) }}>
+                            <Text style={{ fontFamily: 'Gilroy-ExtraBold', fontSize: y(18, true), color: WHITE, marginTop: y(37) }}>You did not provide location access</Text>
+                            <Text style={{ fontFamily: 'Gilroy-Regular', lineHeight: y(22), fontSize: y(14, true), color: WHITE, width: '100%', paddingHorizontal: x(10), textAlign: 'center', marginTop: y(24) }}>
                                 {`As a Perch driver , it is required that we know your location, at least when you are using the app . This is so that we can effectively plan trips and update riders with your location. To use the app to make a trip, we need you to provide us with access to your location and you can do so with the button below.`}
                             </Text>
                             <View style={{ marginTop: y(34) }}>
@@ -950,11 +950,14 @@ export const callNumber = phone => {
 export function x(data) {
     return (data / 375) * width;
 };
-export function y(data) {
+export function y(data, isFontSize) {
     // if (height < 800)
-    //     return ((data / 812) * height) + 3;
+    //   return ((data / 812) * height) + 3;
     // else
-    return ((data / 812) * height) + 3;
+    if (isFontSize && height >= 812) {
+        return (data + 3);
+    } else
+        return ((data / 812) * height) + 3;
 };
 //COLORS USED IN THE APP
 export const colors = {

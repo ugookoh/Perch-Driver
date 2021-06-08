@@ -51,14 +51,14 @@ export default StyleSheet.create({
     },
     time: {
         fontFamily: 'Gilroy-Regular',
-        fontSize: y(9),
+        fontSize: y(9, true),
         //color: '#FFFFFF',
         position: 'absolute',
         bottom: x(2),
     },
     text: {
         fontFamily: 'Gilroy-Regular',
-        fontSize: y(13),
+        fontSize: y(13, true),
         lineHeight: y(20),
         margin: x(12),
     },
@@ -75,7 +75,7 @@ export default StyleSheet.create({
     },
     dateText: {
         fontFamily: 'Gilroy-SemiBold',
-        fontSize: y(13),
+        fontSize: y(13, true),
 
     },
 });

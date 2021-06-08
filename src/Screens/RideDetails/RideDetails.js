@@ -121,7 +121,7 @@ export default class RideDetails extends React.Component {
         });
     };
     componentDidMount() {
-       
+
     };
     sorter(a, b) {
         function numbergetter(time) {
@@ -164,7 +164,7 @@ export default class RideDetails extends React.Component {
 
         return (
             <View style={styles.container}>
-                 <OfflineNotice navigation={this.props.navigation} screenName={this.props.route.name} />
+                <OfflineNotice navigation={this.props.navigation} screenName={this.props.route.name} />
                 <View style={styles.header}>
                     <Header name={'Ride Details'} scrollY={this.headerInverse} onPress={() => { this.props.navigation.goBack() }} />
                 </View>
@@ -189,17 +189,17 @@ export default class RideDetails extends React.Component {
                             <Text style={[styles.tripTitle, { marginTop: y(14), width: x(313), alignSelf: 'center' }]}>Trip Details</Text>
                             <View style={[styles.travel, { top: y(dimensionAssert() ? 55 : 58) }]}>
                                 <Feather name={'map-pin'} size={y(10)} color={colors.BLUE} />
-                                <Text numberOfLines={3} style={[styles.firstLayer, { color: colors.BLACK, fontSize: y(12), marginLeft: x(5), width: x(300), }]}>{this.state.data.locationAddress}</Text>
+                                <Text numberOfLines={3} style={[styles.firstLayer, { color: colors.BLACK, fontSize: y(12, true), marginLeft: x(5), width: x(300), }]}>{this.state.data.locationAddress}</Text>
                             </View>
                             <View style={styles.LtoD_Divider}><DashedDivider borderColor={colors.BLUE} height={y(dimensionAssert() ? 28 : 21)} width={0} borderWidth={0.5} borderRadius={0} /></View>
                             <View style={[styles.travel, { top: y(dimensionAssert() ? 103 : 94) }]}>
                                 <Feather name={'map-pin'} size={y(10)} color={colors.BLUE} />
-                                <Text numberOfLines={3} style={[styles.firstLayer, { color: colors.BLACK, fontSize: y(12), marginLeft: x(5), width: x(300), }]}>{this.state.data.destinationAddress}</Text>
+                                <Text numberOfLines={3} style={[styles.firstLayer, { color: colors.BLACK, fontSize: y(12, true), marginLeft: x(5), width: x(300), }]}>{this.state.data.destinationAddress}</Text>
                             </View>
 
 
                             <View style={[styles.calendar]}>
-                                <Text style={[styles.firstLayer, { color: colors.BLUE, fontSize: y(14), marginRight: x(5), }]}>{this.state.date}</Text>
+                                <Text style={[styles.firstLayer, { color: colors.BLUE, fontSize: y(14, true), marginRight: x(5), }]}>{this.state.date}</Text>
                                 <Feather name={'calendar'} size={y(13)} color={colors.BLUE} />
                             </View>
 
@@ -268,7 +268,7 @@ export default class RideDetails extends React.Component {
 
                             <View style={[styles.spaceout, { marginVertical: y(10) }]}>
                                 <Text style={[styles.total, {}]}>Total</Text>
-                                <Text style={[styles.total, {}]}>{`+ $14.15`}</Text>
+                                <Text style={[styles.total, {}]}>+ {this.state.details.totalPay}</Text>
                             </View>
 
                         </View>

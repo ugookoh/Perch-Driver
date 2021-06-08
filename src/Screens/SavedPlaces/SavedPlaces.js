@@ -83,7 +83,7 @@ export default class SavedPlaces extends React.Component {
                         <Fontisto name={'map-marker-alt'} color={colors.BLUE} size={y(20)} style={styles.icon} />
                         <View style={styles.predictionView_}>
                             <Text style={styles.predictionText}>{value.mainText}</Text>
-                            <Text style={[styles.predictionText, { fontSize: y(12), marginTop: x(1) }]}>{value.description}</Text>
+                            <Text style={[styles.predictionText, { fontSize: y(12, true), marginTop: x(1) }]}>{value.description}</Text>
                         </View>
                     </View>
                 </TouchableOpacity>

@@ -8,7 +8,7 @@ export default StyleSheet.create({
     },
     title: {
         fontFamily: 'Gilroy-ExtraBold',
-        fontSize: y(20),
+        fontSize: y(20, true),
         color: colors.BLUE_FONT,
         width: x(343),
     },
@@ -26,7 +26,7 @@ export default StyleSheet.create({
     },
     text: {
         fontFamily: 'Gilroy-Regular',
-        fontSize: y(15),
+        fontSize: y(15, true),
         marginLeft: x(12),
     },
     spaceView: {
@@ -40,7 +40,7 @@ export default StyleSheet.create({
         borderColor: colors.GREY_OPAQUE(0.7),
         borderRadius: 6,
         fontFamily: 'Gilroy-Regular',
-        fontSize: y(15),
+        fontSize: y(15, true),
         paddingLeft: x(12),
         marginTop: y(10),
         borderWidth: 1,
@@ -64,7 +64,7 @@ export default StyleSheet.create({
     },
     uploadText: {
         fontFamily: 'Gilroy-Regular',
-        fontSize: y(14),
+        fontSize: y(14, true),
     },
     image: {
         backgroundColor: colors.GREY_BACKGROUND,
@@ -104,7 +104,7 @@ export default StyleSheet.create({
         height: y(250),
     },
     smallText: {
-        fontSize: y(10),
+        fontSize: y(10, true),
         fontFamily: 'Gilroy-ExtraBold',
         textAlign: 'center'
     },

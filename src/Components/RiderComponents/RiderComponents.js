@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {
     getDate,
     polylineLenght, x, y, colors, height, width, dimensionAssert,
-    distanceCalculator, indexFinder, callNumber, scheduledCarpoolRequestCanceller,dropOffCarpooler
+    distanceCalculator, indexFinder, callNumber, scheduledCarpoolRequestCanceller, dropOffCarpooler
 } from '../../Functions/Functions';
 import * as turf from '@turf/turf';//for encoding polylines
 import database from '@react-native-firebase/database';
@@ -336,7 +336,7 @@ export class AwaitingPickup extends React.Component {
         return (
             <View style={[styles.cont, {}]} >
                 <View style={styles.detailCont1}>
-                    <Text numberOfLines={2} style={[styles.name, { fontSize: y(18), width: x(160), }]}>{`${data.details.firstName} ${data.details.lastName}`}</Text>
+                    <Text numberOfLines={2} style={[styles.name, { fontSize: y(18, true), width: x(160), }]}>{`${data.details.firstName} ${data.details.lastName}`}</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Text numberOfLines={1} style={[styles.riderDetails]}>{`${distance.toLowerCase()} • ${data.details.tripDetails.seatNumber} ${data.details.tripDetails.seatNumber == 1 ? 'person' : 'people'} • ${Number(data.details.history.rating).toFixed(1)}`}</Text>
                         <FontAwesome name={'star'} color={colors.GOLD} size={y(13)} style={{ marginLeft: x(5) }} />
@@ -344,7 +344,7 @@ export class AwaitingPickup extends React.Component {
                     <View style={[styles.distanceLeft, { width: x(120), marginTop: x(5) }]}>
                         <Text style={styles.distanceLeftText}>{`${data.details.tripDetails.depatureTime} pickup`}</Text>
                     </View>
-                    <Text style={[styles.cash, { marginTop: y(10), fontSize: y(25) }]}>+ ${data.details.tripDetails.toPay.toFixed(2)}</Text>
+                    <Text style={[styles.cash, { marginTop: y(10), fontSize: y(25, true) }]}>+ ${data.details.tripDetails.toPay.toFixed(2)}</Text>
                 </View>
                 <View>
                     {
@@ -533,7 +533,7 @@ export class CurrentRiders extends React.Component {
         return (
             <View style={styles.cont}>
                 <View style={styles.detailCont1}>
-                    <Text numberOfLines={2} style={[styles.name, { fontSize: y(18), width: x(160), }]}>{`${data.details.firstName} ${data.details.lastName}`}</Text>
+                    <Text numberOfLines={2} style={[styles.name, { fontSize: y(18, true), width: x(160), }]}>{`${data.details.firstName} ${data.details.lastName}`}</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Text numberOfLines={1} style={[styles.riderDetails]}>{`${distance.toLowerCase()} • ${data.details.tripDetails.seatNumber} ${data.details.tripDetails.seatNumber == 1 ? 'person' : 'people'} • ${Number(data.details.history.rating).toFixed(1)}`}</Text>
                         <FontAwesome name={'star'} color={colors.GOLD} size={y(13)} style={{ marginLeft: x(5) }} />
@@ -602,12 +602,12 @@ export class SeeDetails extends React.Component {
         return (
             <View style={[styles.cont, { width: x(313), }]}>
                 <View style={[styles.detailCont1, {}]}>
-                    <Text numberOfLines={2} style={[styles.name, { fontSize: y(18), width: x(150), }]}>{`${data.details.firstName} ${data.details.lastName}`}</Text>
+                    <Text numberOfLines={2} style={[styles.name, { fontSize: y(18, true), width: x(150), }]}>{`${data.details.firstName} ${data.details.lastName}`}</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Text numberOfLines={1} style={[styles.riderDetails]}>{`${distance.toLowerCase()} • ${data.details.tripDetails.seatNumber} ${data.details.tripDetails.seatNumber == 1 ? 'person' : 'people'} • ${Number(data.details.history.rating).toFixed(1)}`}</Text>
                         <FontAwesome name={'star'} color={colors.GOLD} size={y(10)} style={{ marginLeft: x(3) }} />
                     </View>
-                    <Text style={[styles.cash, { fontSize: y(24) }]}>+ ${data.details.tripDetails.toPay.toFixed(2)}</Text>
+                    <Text style={[styles.cash, { fontSize: y(24, true) }]}>+ ${data.details.tripDetails.toPay.toFixed(2)}</Text>
 
                 </View>
                 <View style={{ alignItems: 'flex-end' }}>
@@ -625,7 +625,7 @@ export class SeeDetails extends React.Component {
                         <Text style={[styles.buttonText, { color: colors.WHITE }]}>See Details</Text>
                     </TouchableOpacity>
                     <View style={[styles.distanceLeft, { marginTop: x(5), width: x(100), }]}>
-                        <Text style={[styles.distanceLeftText, { fontSize: y(11) }]}>{`${data.details.tripDetails.depatureTime} pickup`}</Text>
+                        <Text style={[styles.distanceLeftText, { fontSize: y(11, true) }]}>{`${data.details.tripDetails.depatureTime} pickup`}</Text>
                     </View>
                 </View>
             </View>

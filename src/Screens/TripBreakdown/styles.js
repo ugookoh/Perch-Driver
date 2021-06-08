@@ -51,7 +51,7 @@ export default StyleSheet.create({
     },
     title: {
         fontFamily: 'Gilroy-ExtraBold',
-        fontSize: y(20),
+        fontSize: y(20, true),
         color: colors.BLUE_FONT,
         width: x(343),
     },
@@ -65,11 +65,11 @@ export default StyleSheet.create({
         flexDirection: 'row',
     },
     text: {
-        fontSize: y(15),
+        fontSize: y(15, true),
         fontFamily: 'Gilroy-Regular',
     },
     textAddress: {
-        fontSize: y(15),
+        fontSize: y(15, true),
         fontFamily: 'Gilroy-Medium',
         width: x(250),
         textAlign: 'right',
@@ -85,13 +85,13 @@ export default StyleSheet.create({
         //alignItems: 'center',
     },
     needHelp: {
-        fontSize: y(13),
+        fontSize: y(13, true),
         fontFamily: 'Gilroy-ExtraBold',
         textDecorationLine: 'underline',
     },
     number: {
         color: colors.BLUE_FONT,
-        fontSize: y(17),
+        fontSize: y(17, true),
         fontFamily: 'Gilroy-ExtraBold',
     },
     borderTO: {
@@ -124,7 +124,7 @@ export default StyleSheet.create({
     statusText: {
         color: colors.WHITE,
         fontFamily: 'Gilroy-ExtraBold',
-        fontSize: y(15),
+        fontSize: y(15, true),
         paddingVertical: x(4),
         paddingHorizontal: x(8),
     },
@@ -193,7 +193,7 @@ export default StyleSheet.create({
     bubbleText: {
         color: colors.WHITE,
         fontFamily: 'Gilroy-ExtraBold',
-        fontSize: y(14),
+        fontSize: y(14, true),
         maxHeight: x(60),
     },
     container_: {
@@ -227,7 +227,7 @@ export default StyleSheet.create({
     },
     counterText: {
         fontFamily: 'Gilroy-SemiBold',
-        fontSize: y(18),
+        fontSize: y(18, true),
         textAlign: 'center',
     },
     counterContainer: {
@@ -247,7 +247,7 @@ export default StyleSheet.create({
     },
     seatNumberText: {
         fontFamily: 'Gilroy-SemiBold',
-        fontSize: y(20),
+        fontSize: y(20, true),
     },
     doneButton: {
         width: '100%',
@@ -260,7 +260,7 @@ export default StyleSheet.create({
     doneText: {
         color: colors.WHITE,
         fontFamily: 'Gilroy-SemiBold',
-        fontSize: y(15),
+        fontSize: y(15, true),
     },
     plus_minus: {
         //backgroundColor:'red',

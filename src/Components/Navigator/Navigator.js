@@ -222,7 +222,7 @@ export default class Navigator extends React.Component {
                 <View style={[styles.subContainer, { flexDirection: this.props.display ? 'column' : 'row' }]}>
                     {this.props.display ?
                         <>
-                            <Text numberOfLines={2} style={[styles.text, { fontSize: y(20) }]}>{`${this.props.display.details.firstName} ${this.props.display.details.lastName}`}</Text>
+                            <Text numberOfLines={2} style={[styles.text, { fontSize: y(20, true) }]}>{`${this.props.display.details.firstName} ${this.props.display.details.lastName}`}</Text>
                             {
                                 this.props.display.status == 'CURRENTLOCATION' ?
                                     <>
