@@ -1,13 +1,10 @@
 import React from 'react';
-import styles from './styles';
-import { Animated, Text, View, KeyboardAvoidingView, StatusBar, TextInput, Dimensions, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Platform, LayoutAnimation, UIManager, AppState, BackHandler } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
-import { permissionLocation, Notifications, handleLogin, OfflineNotice, x, y, colors, height, width, dimensionAssert } from '../../Functions/Functions';
-import Divider from '../Divider/Divider';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Text, TouchableOpacity, View } from 'react-native';
 import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
-const polyline = require('@mapbox/polyline');// for decoding polylines
-import { polylineLenght } from '../../Functions/Functions';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { dimensionAssert, polylineLenght, x, y } from '../../Functions/Functions';
+import Divider from '../Divider/Divider';
+import styles from './styles';
 export default class HistoryComponent extends React.Component {
     constructor(props) {
         super(props);

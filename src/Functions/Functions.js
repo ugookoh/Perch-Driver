@@ -745,8 +745,9 @@ export function getLocation(mainText, description, id, fieldID, screen) {
                     AsyncStorage.getItem('USER_DETAILS')
                         .then(result => {
                             let userDetails = JSON.parse(result);
-
+                            let title = '';
                             if (fieldID == 'home') {
+                                title = 'homeAddress';
                                 userDetails.homeAddress = {
                                     latitude: lat,
                                     longitude: lng,
@@ -757,6 +758,7 @@ export function getLocation(mainText, description, id, fieldID, screen) {
                                 this.setState({ homeAddress: userDetails.homeAddress, home: userDetails.homeAddress.mainText });
                             }
                             else if (fieldID == 'work') {
+                                title = 'workAddress';
                                 userDetails.workAddress = {
                                     latitude: lat,
                                     longitude: lng,
@@ -770,9 +772,19 @@ export function getLocation(mainText, description, id, fieldID, screen) {
                             AsyncStorage.setItem('USER_DETAILS', JSON.stringify(userDetails))
                                 .catch(error => { console.log(error.message) })
 
-                            database().ref(`users/${[userDetails.userID]}`).update({
-                                ...userDetails
-                            }).catch(error => { console.log(error.message) })
+                            if (title != '')
+                                axios.post('https://us-central1-perch-01.cloudfunctions.net/updateUserDetails', {
+                                    userID: userDetails.userID,
+                                    fieldsToUpdate: {
+                                        [title]: {
+                                            latitude: lat,
+                                            longitude: lng,
+                                            mainText: mainText,
+                                            description: description,
+                                            place_id: id,
+                                        }
+                                    }
+                                }).catch(error => { Alert.alert('Error', error.message) })
 
                         }).catch(error => { console.log(error.message) })
                 })
