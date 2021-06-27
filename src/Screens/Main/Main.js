@@ -1,24 +1,29 @@
-import React from 'react';
-import styles from './styles';
-import axios from 'axios';
-import turf from '@turf/turf';
-import { permissionLocation, getFirebaseMessagingToken, debouncer, getLocation, searchHistoryList, reverseGeocoding, OfflineNotice, makeid, x, y, colors, height, width, dimensionAssert } from '../../Functions/Functions';
-import SplashScreen from 'react-native-splash-screen';
-import LoadingScreen from '../../Components/LoadingScreen/LoadingScreen';
-import { Animated, View, Text, Dimensions, Easing, TouchableWithoutFeedback, TouchableOpacity, Keyboard, TextInput, PanResponder, LogBox, Platform, StatusBar, LayoutAnimation, UIManager, BackHandler } from 'react-native';
-import Geolocation from 'react-native-geolocation-service';
 import AsyncStorage from '@react-native-community/async-storage';
 import database from '@react-native-firebase/database';
-const polyline = require('@mapbox/polyline');// for decoding polylines
+import React from 'react';
+import {
+    Animated, BackHandler, Easing,
+    Keyboard, LayoutAnimation, LogBox, PanResponder, Platform,
+    StatusBar, Text, TextInput, TouchableOpacity,
+    TouchableWithoutFeedback, UIManager, View
+} from 'react-native';
+import Geolocation from 'react-native-geolocation-service';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
-import { Menu, CarpoolIcon, RideshareIcon, Pin } from '../../Images/svgimages/vectors';
-import Divider from '../../Components/Divider/Divider';
-import MapView, { PROVIDER_GOOGLE, Marker, AnimatedRegion, Polyline, Polygon } from 'react-native-maps';
+import SplashScreen from 'react-native-splash-screen';
 import Icon from 'react-native-vector-icons/Feather';
 import Icon_ from 'react-native-vector-icons/FontAwesome';
-import Drawer from '../../Navigation/DrawerComponent/DrawerComponent';
+import Divider from '../../Components/Divider/Divider';
+import LoadingScreen from '../../Components/LoadingScreen/LoadingScreen';
 import MapStyle from '../../Components/MapStyle/MapStyle.json';
-import { color } from 'react-native-reanimated';
+import {
+    colors, debouncer, dimensionAssert, getFirebaseMessagingToken,
+    getLocation, height, makeid, OfflineNotice, permissionLocation,
+    reverseGeocoding, searchHistoryList, width, x, y
+} from '../../Functions/Functions';
+import { Menu, Pin } from '../../Images/svgimages/vectors';
+import Drawer from '../../Navigation/DrawerComponent/DrawerComponent';
+import styles from './styles';
 
 const X_OUT = 0;
 const X_IN = -x(325);

@@ -24,6 +24,7 @@ import TripStarted from '../Screens/TripStarted/TripStarted';
 import VerifyDetails from '../Screens/VerifyDetails/VerifyDetails';
 import Preferences from '../Screens/Preferences/Preferences';
 import Chat from '../Screens/Chat/Chat';
+import PayoutInformation from '../Screens/PayoutInformation/PayoutInformations';
 import PreviousMessages from '../Screens/PreviousMessages/PreviousMessages';
 import SupportMessage from '../Screens/SupportMessage/SupportMessage';
 import ScheduledTrips from '../Screens/ScheduledTrips/ScheduledTrips';
@@ -85,6 +86,7 @@ export default class MyStack extends React.Component {
         <Stack.Screen name="VerifyDetails" component={VerifyDetails} />
         <Stack.Screen name="Preferences" component={Preferences} />
         <Stack.Screen name="Chat" component={Chat} />
+        <Stack.Screen name="PayoutInformation" component={PayoutInformation} />
         <Stack.Screen name="PreviousMessages" component={PreviousMessages} />
         <Stack.Screen name="SupportMessage" component={SupportMessage} />
         <Stack.Screen name="ScheduledTrips" component={ScheduledTrips} />

@@ -1,12 +1,11 @@
 import React from 'react';
-import styles from './styles';
-import { Animated, Text, View, KeyboardAvoidingView, StatusBar, TextInput, Dimensions, TouchableOpacity, TouchableWithoutFeedback, Alert, Platform, LayoutAnimation, UIManager, AppState, BackHandler } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
-import { permissionLocation, signOut, handleLogin, OfflineNotice, x, y, colors, height, width } from '../../Functions/Functions'
-import Header from '../../Components/Header/Header';
+import { Alert, Animated, Text, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Divider from '../../Components/Divider/Divider';
+import Header from '../../Components/Header/Header';
+import { OfflineNotice, openBrowser, signOut, x, y } from '../../Functions/Functions';
 import { CarInCity } from '../../Images/svgimages/vectors';
+import styles from './styles';
 
 export default class Settings extends React.Component {
     constructor() {
@@ -23,7 +22,7 @@ export default class Settings extends React.Component {
         return (
             <View style={styles.container}>
                 <Header name={'Settings'} scrollY={this.state.scrollY} onPress={() => { this.props.navigation.goBack(); }} />
-                 <OfflineNotice navigation={this.props.navigation} screenName={this.props.route.name} />
+                <OfflineNotice navigation={this.props.navigation} screenName={this.props.route.name} />
                 <View style={{ marginTop: y(25) }}>
                     <View>
                         <TouchableOpacity
@@ -58,6 +57,7 @@ export default class Settings extends React.Component {
                     <View style={{ marginTop: y(20.5) }}>
                         <TouchableOpacity
                             onPress={() => {
+                                openBrowser(`https://perchrides.com/s/db/ddash`);
                             }}>
                             <View style={styles.optionChoice}>
                                 <Text style={styles.optionText}>Documents</Text>
