@@ -16,28 +16,28 @@ export default class AnimatedPolyline extends Component {
         this.switcher = Math.ceil(this.props.coordinates.length / 31); //This dictaes how fast we are going
     }
     componentDidMount() {
-       setTimeout(()=>{
-        this.watchID1 = setInterval(() => {
-            if (this.firstStepComplete == false)
-                this._animateFirst(this.props.coordinates);
-        }, 40);
+        setTimeout(() => {
+            this.watchID1 = setInterval(() => {
+                if (this.firstStepComplete == false)
+                    this._animateFirst(this.props.coordinates);
+            }, 40);
 
-        this.watchID2 = setInterval(() => {
-            if (this.firstStepComplete && this.pause) {
-                if (this.counter2 >= this.props.coordinates.length) {
-                    this.setState({ coords: [] })
-                    //console.log(this.state.coords)
-                    this.pause = false;
-                    setTimeout(() => {
-                        this.counter2 = 0;
-                        this.pause = true;
-                    }, 1000)
+            this.watchID2 = setInterval(() => {
+                if (this.firstStepComplete && this.pause) {
+                    if (this.counter2 >= this.props.coordinates.length) {
+                        this.setState({ coords: [] })
+                        //console.log(this.state.coords)
+                        this.pause = false;
+                        setTimeout(() => {
+                            this.counter2 = 0;
+                            this.pause = true;
+                        }, 1000)
+                    }
+                    else
+                        this._animate(this.props.coordinates);
                 }
-                else
-                    this._animate(this.props.coordinates);
-            }
-        }, 40)
-       },700)
+            }, 40)
+        }, 700)
     }
     componentWillUnmount() {
         clearInterval(this.watchID1);

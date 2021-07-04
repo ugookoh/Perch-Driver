@@ -484,8 +484,8 @@ export default class TripStarted extends React.Component {
                 },
                     error => (console.log(error.message)),
                     {
-                        distanceFilter: 10,
-                        enableHighAccuracy: Platform.OS == 'ios' ? false : true,
+                        distanceFilter: 0.5,
+                        enableHighAccuracy: true,
                     }
                 );
 
@@ -1058,10 +1058,12 @@ export default class TripStarted extends React.Component {
                 <TouchableOpacity style={[styles.zoomIcon, { right: x(10), top: y(dimensionAssert() ? 230 : 280) }, this.state.selected ? { backgroundColor: colors.BLUE } : {}]}
                     onPress={() => {
                         if (this.state.polyline) {
-                            if (this.state.selected)
-                                this.selectedNextMove();
-                            else
-                                this.nextMove();
+                            this.setState({ followMap: false }, () => {
+                                if (this.state.selected)
+                                    this.selectedNextMove();
+                                else
+                                    this.nextMove();
+                            });
                         }
                     }}
                 >
@@ -1070,19 +1072,20 @@ export default class TripStarted extends React.Component {
                 <TouchableOpacity style={[styles.zoomIcon, { right: x(10), top: y(dimensionAssert() ? 295 : 335) }]}
                     onPress={() => {
                         if (this.mapReady && this.state.detailsLoaded) {
-                            this.setState({ followMap: false });
-                            const line = turf.lineString([[this.state.location.latitude, this.state.location.longitude], ...this.state.polyline, [this.state.destination.latitude, this.state.destination.longitude]]);
-                            let bboxPolygon = turf.bboxPolygon(turf.bbox(line)).geometry.coordinates[0].map((v => { return { latitude: v[0], longitude: v[1] } }));
+                            this.setState({ followMap: false }, () => {
+                                const line = turf.lineString([[this.state.location.latitude, this.state.location.longitude], ...this.state.polyline, [this.state.destination.latitude, this.state.destination.longitude]]);
+                                let bboxPolygon = turf.bboxPolygon(turf.bbox(line)).geometry.coordinates[0].map((v => { return { latitude: v[0], longitude: v[1] } }));
 
-                            this.map.fitToCoordinates(bboxPolygon, {
-                                edgePadding:
-                                {
-                                    top: x(170),
-                                    right: x(80),
-                                    bottom: x(90),
-                                    left: x(20),
-                                },
-                            });
+                                this.map.fitToCoordinates(bboxPolygon, {
+                                    edgePadding:
+                                    {
+                                        top: x(170),
+                                        right: x(80),
+                                        bottom: x(90),
+                                        left: x(20),
+                                    },
+                                });
+                            })
                         }
                     }}
                 >
@@ -1152,6 +1155,7 @@ export default class TripStarted extends React.Component {
                     showsCompass={false}
                     scrollEnabled={true}
                     showsMyLocationButton={false}
+                    mapPadding={this.state.followMap ? { top: y(300) } : {}}
                     onMapReady={() => {
                         this.mapReady = true;
                         Geolocation.getCurrentPosition(
@@ -1188,7 +1192,7 @@ export default class TripStarted extends React.Component {
                                 })}
                                 strokeColorMove={colors.BLUE_LIGHT}
                                 strokeColor={colors.BLUE}
-                                strokeWidth={4}
+                                strokeWidth={7}
                             />
                             <Marker //DESTINATION
                                 coordinate={{ latitude: this.state.destination.latitude, longitude: this.state.destination.longitude }}

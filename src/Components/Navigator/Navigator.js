@@ -128,13 +128,16 @@ export default class Navigator extends React.Component {
          * WE store the texts and DISTANCEtext so that we never resay any one
          */
         if (this.props.speaker && (this.state.messages.indexOf(text_id) == -1) && (this.state.speakerChoice == 'NAVIGATION_ONLY' || this.state.speakerChoice == 'ALL')) {
-            this.state.messages.push(text_id)
-            Tts.getInitStatus().then(() => {
-                Tts.speak(text, {
-                    iosVoiceId: "com.apple.ttsbundle.Samantha-compact",
-                    KEY_PARAM_VOLUME: 1,
+            let messageArray = this.state.messages;
+            messageArray.push(text_id);
+            this.setState({ messages: messageArray }, () => {
+                Tts.getInitStatus().then(() => {
+                    Tts.speak(text, {
+                        iosVoiceId: "com.apple.ttsbundle.Samantha-compact",
+                        KEY_PARAM_VOLUME: 1,
+                    });
                 });
-            });
+            })
         }
     }
     componentWillUnmount() {
@@ -186,7 +189,7 @@ export default class Navigator extends React.Component {
             default: { icon = <FontAwesome name='long-arrow-up' color={colors.BLUE} size={y(26)} style={{ marginBottom: x(6) }} /> } break;
         };
         if (this.state.index == this.state.steps.length - 1) {
-            text = this.state.endAddress;
+            text = 'You have arrived!';
             icon = <Ionicons name={'md-planet-outline'} color={colors.BLUE} size={y(26)} style={{ marginBottom: x(6) }} />
         }
         else {
