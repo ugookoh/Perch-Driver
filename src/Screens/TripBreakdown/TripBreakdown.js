@@ -236,7 +236,7 @@ export default class TripBreakdown extends React.Component {
                         })}
                         strokeColorMove={colors.BLUE_LIGHT}
                         strokeColor={colors.BLUE}
-                        strokeWidth={4}
+                        strokeWidth={5}
                     />
                     <Marker //DESTINATION
                         coordinate={{ latitude: this.state.destination.latitude, longitude: this.state.destination.longitude }}
