@@ -653,7 +653,7 @@ export function cancelScheduledTrip(toSend) {
 
 };
 //GET LOCATION COORDINATES
-export function getLocation(mainText, description, id, fieldID, screen) {
+export function getLocation(mainText, description, id, fieldID, screen, animateMapToCurrentRegion) {
     switch (screen) {
         case 'Main': {
             Keyboard.dismiss();
@@ -707,6 +707,7 @@ export function getLocation(mainText, description, id, fieldID, screen) {
                                     axios.get(`https://maps.googleapis.com/maps/api/directions/json?origin=${[location_.latitude, location_.longitude]}&destination=${[this.state.latitude1, this.state.longitude1]}&key=${GOOGLE_KEY}`)
                                         .then(result => {
                                             this.props.navigation.navigate('TripBreakdown', {
+                                                animateMapToCurrentRegion: animateMapToCurrentRegion,
                                                 location: {
                                                     description: location_.description,
                                                     latitude: location_.latitude,
@@ -793,10 +794,10 @@ export function getLocation(mainText, description, id, fieldID, screen) {
     }
 };
 //TO CREATE A DRIVER CARPOOL REQUEST
-export function createCarpoolRequest(requestObject) {
+export function createCarpoolRequest(requestObject, animateMapToCurrentRegion) {
     axios.post(`https://us-central1-perch-01.cloudfunctions.net/createCarpoolRequest`, requestObject)
         .then(() => {
-            this.props.navigation.navigate('TripStarted');
+            this.props.navigation.navigate('TripStarted', { animateMapToCurrentRegion: animateMapToCurrentRegion });
             setTimeout(() => {
                 this.setState({ loading: false })
             }, 2000)
