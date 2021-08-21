@@ -368,7 +368,8 @@ export default class TripBreakdown extends React.Component {
                                                 hour: new Date().getHours(),
                                                 min: new Date().getMinutes(),
                                                 seconds: new Date().getSeconds(),
-                                            });
+                                            },
+                                                this.props.route.params.animateMapToCurrentRegion);
                                         else {
                                             const date = this.state.tomorrow ?
                                                 this.state.date + _1DAY_MILLI_SECS :

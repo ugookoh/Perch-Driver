@@ -473,7 +473,7 @@ export default class TripStarted extends React.Component {
                 ]);
         else
             Alert.alert('Cancel trip?',
-                'Canceling the trip would remove you from the map and complete this sheduled trip. Press "End trip" to remove it',
+                'Canceling the trip would remove you from the map and complete this scheduled trip. Press "End trip" to remove it',
                 [
                     {
                         text: 'Cancel',

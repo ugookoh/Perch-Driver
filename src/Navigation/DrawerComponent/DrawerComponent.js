@@ -102,7 +102,7 @@ export default class DrawerComponent extends React.Component {
                             : <></>}
                     </View>
                     <Text style={styles.name}>{this.props.userDetails ? this.props.userDetails.firstName + ' ' + this.props.userDetails.lastName : ''}</Text>
-                    <Text style={styles.tripNo}>{`${this.props.userDetails ? this.props.choice == 'rideshare' ? this.props.userDetails.driverSummarizedHistory.rideshare.tripNumber : this.props.userDetails.driverSummarizedHistory.carpool.tripNumber : ''} Trips`}</Text>
+                    <Text style={styles.tripNo}>{`${this.props.userDetails ? this.props.choice == 'rideshare' ? this.props.userDetails.driverSummarizedHistory.rideshare.displayTripNumber : this.props.userDetails.driverSummarizedHistory.carpool.displayTripNumber : ''} Trips`}</Text>
                     <View style={[styles.rating, { alignItems: 'center' }]}>
                         <Text style={styles.ratingText}>{`${this.props.userDetails ? this.props.choice == 'rideshare' ? Number(this.props.userDetails.driverSummarizedHistory.rideshare.rating).toFixed(1) : Number(this.props.userDetails.driverSummarizedHistory.carpool.rating).toFixed(1) : ''} `}</Text>
                         <FontAwesome name={'star'} size={y(15)} color={'#FFC107'} />

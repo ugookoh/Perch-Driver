@@ -159,54 +159,54 @@ export default class Main extends React.Component {
                 });
             }
         }
-        else
-            AsyncStorage.getItem('USER_DETAILS')
-                .then(result => {
-                    if (result) {
-                        const userDetails = JSON.parse(result);
-                        database().ref(`carpoolRequests/${userDetails.driverID}`).on('value', data => {
-                            if (data.val()) {
-                                if (data.val().requestStatus == 'active')
-                                    this.setState({ status: 'ONLINE-ACTIVE' });
-                                else if (data.val().requestStatus == 'inactive')
-                                    this.setState({ status: 'ONLINE-INACTIVE' });
-                                else
-                                    database().ref(`carpoolRequests/${userDetails.driverID}`).remove()
-                            }
+
+        AsyncStorage.getItem('USER_DETAILS')
+            .then(result => {
+                if (result) {
+                    const userDetails = JSON.parse(result);
+                    database().ref(`carpoolRequests/${userDetails.driverID}`).on('value', data => {
+                        if (data.val()) {
+                            if (data.val().requestStatus == 'active')
+                                this.setState({ status: 'ONLINE-ACTIVE' });
+                            else if (data.val().requestStatus == 'inactive')
+                                this.setState({ status: 'ONLINE-INACTIVE' });
                             else
-                                this.setState({ status: 'OFFLINE' });
-                        });
-                        this.setState({
-                            workAddress: userDetails.workAddress ? userDetails.workAddress : 'NORESULTS',
-                            homeAddress: userDetails.homeAddress ? userDetails.homeAddress : 'NORESULTS',
-                        });
+                                database().ref(`carpoolRequests/${userDetails.driverID}`).remove()
+                        }
+                        else
+                            this.setState({ status: 'OFFLINE' });
+                    });
+                    this.setState({
+                        workAddress: userDetails.workAddress ? userDetails.workAddress : 'NORESULTS',
+                        homeAddress: userDetails.homeAddress ? userDetails.homeAddress : 'NORESULTS',
+                    });
 
-                        database().ref(`users/${userDetails.userID}/`).on('value', snapshot => {
-                            AsyncStorage.setItem('USER_DETAILS', JSON.stringify(snapshot.val()))
-                                .then(() => { this.setState({ userDetails: snapshot.val() }) })
-                                .catch((e) => { console.log(e.message) })
-                        });
-                    }
-                    else {
-                        this.watchID_ = setInterval(() => {
-                            AsyncStorage.getItem('USER_DETAILS')
-                                .then((result_) => {
-                                    clearInterval(this.watchID_);
-                                    const userDetails_ = JSON.parse(result_);
-                                    this.setState({
-                                        workAddress: userDetails_.workAddress ? userDetails_.workAddress : 'NORESULTS',
-                                        homeAddress: userDetails_.homeAddress ? userDetails_.homeAddress : 'NORESULTS',
-                                    });
+                    database().ref(`users/${userDetails.userID}/`).on('value', snapshot => {
+                        AsyncStorage.setItem('USER_DETAILS', JSON.stringify(snapshot.val()))
+                            .then(() => { this.setState({ userDetails: snapshot.val() }) })
+                            .catch((e) => { console.log(e.message) })
+                    });
+                }
+                else {
+                    this.watchID_ = setInterval(() => {
+                        AsyncStorage.getItem('USER_DETAILS')
+                            .then((result_) => {
+                                clearInterval(this.watchID_);
+                                const userDetails_ = JSON.parse(result_);
+                                this.setState({
+                                    workAddress: userDetails_.workAddress ? userDetails_.workAddress : 'NORESULTS',
+                                    homeAddress: userDetails_.homeAddress ? userDetails_.homeAddress : 'NORESULTS',
+                                });
 
-                                    database().ref(`users/${userDetails_.userID}/`).on('value', snapshot => {
-                                        AsyncStorage.setItem('USER_DETAILS', JSON.stringify(snapshot.val()))
-                                            .then(() => { this.setState({ userDetails: snapshot.val() }) })
-                                            .catch((e) => { console.log(e.message) })
-                                    });
-                                }).catch(error => { console.log(error.message) })
-                        }, 300)
-                    }
-                }).catch(error => { console.log(error.message) })
+                                database().ref(`users/${userDetails_.userID}/`).on('value', snapshot => {
+                                    AsyncStorage.setItem('USER_DETAILS', JSON.stringify(snapshot.val()))
+                                        .then(() => { this.setState({ userDetails: snapshot.val() }) })
+                                        .catch((e) => { console.log(e.message) })
+                                });
+                            }).catch(error => { console.log(error.message) })
+                    }, 300)
+                }
+            }).catch(error => { console.log(error.message) })
         SplashScreen.hide();
         //isUserLoggedIn.call(this);
         permissionLocation()
@@ -277,13 +277,36 @@ export default class Main extends React.Component {
             workAddress: userDetails.workAddress ? userDetails.workAddress : 'NORESULTS',
             homeAddress: userDetails.homeAddress ? userDetails.homeAddress : 'NORESULTS',
         });
-    }
+    };
+    animateMapToCurrentRegion = () => {
+        Geolocation.getCurrentPosition(
+            (position) => {
+                this.map.animateToRegion({
+                    latitude: position.coords.latitude - 0.001,
+                    longitude: position.coords.longitude,
+                    latitudeDelta: LATITUDE_DELTA,
+                    longitudeDelta: LONGITUDE_DELTA,
+                });
+            },
+            (error) => {
+                console.log(error.code, error.message);
+                Geolocation.requestAuthorization();
+            },
+            {
+                distanceFilter: 10,
+                enableHighAccuracy: Platform.OS == 'ios' ? false : true,
+            }
+        ).catch((error) => {
+            console.log(error.code, error.message);
+            Geolocation.requestAuthorization();
+        });
+    };
+
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
         Geolocation.clearWatch(this.watchID);
         //Geolocation.stopObserving();
     };
-
     home_workLocation(place) {
         switch (place) {
             case 'home': {
@@ -316,11 +339,9 @@ export default class Main extends React.Component {
             } break;
         };
     };
-
     handleBackButtonClick() {
         BackHandler.exitApp();
     };
-
     onReturn(data) {
         if (data == 'L')
             this.setState({ locationFocused: true });
@@ -459,7 +480,7 @@ export default class Main extends React.Component {
                     key={data.place_id}
                     Press={() => {
                         getLocation.call(this,
-                            data.mainText, data.description, data.place_id, input, 'Main');
+                            data.mainText, data.description, data.place_id, input, 'Main', this.animateMapToCurrentRegion);
                     }} />)
         });
         const zoomTop = this.state.searchPosition === 'shown' ?
@@ -477,7 +498,7 @@ export default class Main extends React.Component {
                     key={data.place_id}
                     Press={() => {
                         getLocation.call(this,
-                            data.mainText, data.description, data.place_id, input, 'Main');
+                            data.mainText, data.description, data.place_id, input, 'Main', this.animateMapToCurrentRegion);
                     }} />)
         }) : <></>;
 
@@ -601,7 +622,7 @@ export default class Main extends React.Component {
                         style={styles.status} onPress={() => {
                             if (this.state.status == 'ONLINE-ACTIVE' || this.state.status == 'ONLINE-ACTIVE') {
                                 Keyboard.dismiss();
-                                this.props.navigation.navigate('TripStarted');
+                                this.props.navigation.navigate('TripStarted', { animateMapToCurrentRegion: this.animateMapToCurrentRegion });
                             }
                         }}>
                         <Text style={styles.statusText}>{this.state.status}</Text>
@@ -655,7 +676,7 @@ export default class Main extends React.Component {
                             onPress={() => {
                                 if (this.state.status == 'ONLINE-ACTIVE' || this.state.status == 'ONLINE-ACTIVE') {
                                     Keyboard.dismiss();
-                                    this.props.navigation.navigate('TripStarted');
+                                    this.props.navigation.navigate('TripStarted', { animateMapToCurrentRegion: this.animateMapToCurrentRegion });
                                 }
                                 else
                                     this.animateFullScreen();
