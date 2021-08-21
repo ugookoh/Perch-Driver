@@ -16,7 +16,7 @@ import Geolocation from 'react-native-geolocation-service';
 import Tts from 'react-native-tts';
 import messaging from '@react-native-firebase/messaging';
 
-
+const MAX_DISTANCE_TO_PICK_OR_DROP = 40;
 export class PendingRequest extends React.Component {
     constructor(props) {
         super(props);
@@ -319,6 +319,9 @@ export class AwaitingPickup extends React.Component {
         let i1 = indexFinder(this.props.polyline, closestCoords);
 
         let remainingDistance = this.state.position && i2 >= i1 ? polylineLenght(this.props.polyline.slice(i1, i2 + 1)) : '•••';
+        let remainingDistanceUsedToCalculate = this.state.position && i2 >= i1 ?
+            Number(polylineLenght(this.props.polyline.slice(i1, i2 + 1))) :
+            null;
 
         if (remainingDistance !== '•••') {
             if (remainingDistance < 50 && this.props.now)
@@ -358,11 +361,16 @@ export class AwaitingPickup extends React.Component {
                                         style={[styles.button1, { backgroundColor: colors.BLUE }]}
                                         disabled={this.state.loading}
                                         onPress={() => {
-                                            this.setState({ loading: true }, () => {
-                                                database().ref(`currentCarpoolTrips/${userDetails.driverID}/${data.details.userID}`).update({
-                                                    status: 'STARTED',
-                                                }).catch(error => { console.log(error.message) })
-                                            });
+                                            if (remainingDistanceUsedToCalculate && remainingDistanceUsedToCalculate <= MAX_DISTANCE_TO_PICK_OR_DROP || remainingDistanceUsedToCalculate == 0)
+                                                this.setState({ loading: true }, () => {
+                                                    database().ref(`currentCarpoolTrips/${userDetails.driverID}/${data.details.userID}`).update({
+                                                        status: 'STARTED',
+                                                    }).catch(error => { console.log(error.message) })
+                                                });
+                                            else
+                                                Alert.alert('Too Far', `You need to be within ${MAX_DISTANCE_TO_PICK_OR_DROP} meters to pick up a rider. Please go closer`, [{
+                                                    text: 'Ok',
+                                                }])
                                         }}
                                     >
                                         <Text style={[styles.buttonText, { color: colors.WHITE }]}>Start trip</Text>
@@ -520,6 +528,9 @@ export class CurrentRiders extends React.Component {
 
         let i1 = indexFinder(this.props.polyline, closestCoords);
         let remainingDistance = this.state.position && i2 >= i1 ? polylineLenght(this.props.polyline.slice(i1, i2 + 1)) : '•••';
+        let remainingDistanceUsedToCalculate = this.state.position && i2 >= i1 ?
+            Number(polylineLenght(this.props.polyline.slice(i1, i2 + 1))) :
+            null;
         if (remainingDistance !== '•••') {
             if (remainingDistance <= 150)
                 this.speaker('Rider dropoff in 150 meters');
@@ -557,9 +568,14 @@ export class CurrentRiders extends React.Component {
                             <TouchableOpacity style={[styles.button1, { backgroundColor: colors.BLUE }]}
                                 disabled={this.state.loading}
                                 onPress={() => {
-                                    this.setState({ loading: true }, () => {
-                                        dropOffCarpooler.call(this, data, userDetails, this.props.historyRef);
-                                    });
+                                    if (remainingDistanceUsedToCalculate && remainingDistanceUsedToCalculate <= MAX_DISTANCE_TO_PICK_OR_DROP || remainingDistanceUsedToCalculate == 0)
+                                        this.setState({ loading: true }, () => {
+                                            dropOffCarpooler.call(this, data, userDetails, this.props.historyRef);
+                                        });
+                                    else
+                                        Alert.alert('Too Far', `You need to be within ${MAX_DISTANCE_TO_PICK_OR_DROP} meters to pick up a rider. Please go closer`, [{
+                                            text: 'Ok',
+                                        }])
                                 }}>
                                 <Text style={[styles.buttonText, { color: colors.WHITE }]}>Drop off</Text>
                             </TouchableOpacity>
