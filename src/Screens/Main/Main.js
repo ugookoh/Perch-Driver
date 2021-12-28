@@ -659,7 +659,7 @@ export default class Main extends React.Component {
 
 
 
-                    <Animated.View style={[styles.menuView, [Platform.OS === "ios" ? { elevation: 3, zIndex: 3 } : {}], this.position.getLayout()]} {...this.panResponder.panHandlers}>
+                    <Animated.View style={[styles.menuView, { elevation: 5, zIndex: 5 }, this.position.getLayout()]} {...this.panResponder.panHandlers}>
                         <Drawer
                             navigation={this.props.navigation}
                             hideMenu={this.hideMenu}

@@ -8,7 +8,7 @@ export default StyleSheet.create({
     },
     maps: {
         width: width,
-        height: y(dimensionAssert() ? 490 : 495),
+        height: y(dimensionAssert() ? 490 : 530),
     },
     lowerSection: {
         //height:y(1290),

@@ -10,7 +10,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import StarRating from 'react-native-star-rating';
 import { Message, UserMessage, DayMonthYear } from '../../Components/TextMessages/TextMessages';
 import axios from 'axios';
-import ImagePicker from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import { check, PERMISSIONS, RESULTS, request } from 'react-native-permissions';
 
@@ -132,7 +132,7 @@ export default class Chat extends React.Component {
                         maxHeight: width,
                     };
 
-                    ImagePicker.showImagePicker(options, (response) => {
+                    launchImageLibrary(options, (response) => {
                         if (response.didCancel) {
                             //console.log('User cancelled image picker');
                         } else if (response.error) {
