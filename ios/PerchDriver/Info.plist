@@ -4,7 +4,7 @@
 <dict>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
-    	<string>org.reactjs.native.example.PerchDriver</string>
+		<string>org.reactjs.native.example.PerchDriver</string>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
@@ -25,13 +25,11 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
 			<key>localhost</key>
@@ -43,10 +41,6 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Perch Driver requires camera access to take photos</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Perch Driver would like access to your photo gallery</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-    <string>Perch Driver would like to save photos to your photo gallery</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Perch Driver requires your location to provide you with real-time updates during trips to facilitate pickups, journeys and more. You need to provide access to location to use this app</string>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -55,6 +49,10 @@
 	<string>Perch Driver requires your location to provide you with real-time updates during trips to facilitate pickups, journeys and more. You need to provide access to location to use this app</string>
 	<key>NSMotionUsageDescription</key>
 	<string>App requires motion tracking</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Perch Driver would like to save photos to your photo gallery</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Perch Driver would like access to your photo gallery</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Comfortaa-Bold.ttf</string>

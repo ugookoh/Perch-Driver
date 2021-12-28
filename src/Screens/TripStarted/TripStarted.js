@@ -104,10 +104,10 @@ export default class TripStarted extends React.Component {
         });
         this.value;
         this.panResponder = PanResponder.create({
-            onStartShouldSetPanResponder: (event, gestureState) => {
+            onStartShouldSetPanResponder: (evt, gestureState) => {
                 return (!this.movingUp);
             },
-            onMoveShouldSetPanResponder: (e, gestureState) => {
+            onMoveShouldSetPanResponder: (evt, gestureState) => {
                 return (Math.abs(gestureState.dx) >= 10 && Math.abs(gestureState.dy) >= 10 && !this.movingUp);
             },
 
@@ -513,14 +513,14 @@ export default class TripStarted extends React.Component {
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude,
                 },
-                pitch: 50,
+                pitch: 80,
                 heading: position.coords.heading != -1 ? position.coords.heading : 0,
 
                 // Only on iOS MapKit, in meters. The property is ignored by Google Maps.
-                //altitude: number,
+                // altitude: number,
 
                 // Only when using Google Maps.
-                zoom: 17.5,
+                zoom: 15.5,
             });
         };
     };
@@ -1008,7 +1008,6 @@ export default class TripStarted extends React.Component {
         distance > 100 ?
             distance = `${(distance / 1000).toFixed(1)} KM` :
             distance = `${(distance).toFixed(distance != 0 ? 1 : 0)} M`;
-
         const markers = this.state.markers.map((item) => {
             let type = <></>;
 
@@ -1034,15 +1033,12 @@ export default class TripStarted extends React.Component {
                 </Callout>
             </Marker>)
         });
-
         const rL = this.state.riderlocations.map((item) => {
             return (<RiderLocation
                 key={item.userID}
                 item={item}
             />)
         });
-
-
         return (
             <View style={styles.container}>
                 <StatusBar backgroundColor={colors.BLACK} barStyle={Platform.OS == 'android' ? 'light-content' : 'dark-content'} />
@@ -1213,7 +1209,7 @@ export default class TripStarted extends React.Component {
                 </MapView>
                 <Animated.View style={[styles.lowerSection, this.position.getLayout(),]} {...this.panResponder.panHandlers}
                     onLayout={(event) => {
-                        this.TAB_HEIGHT = -event.nativeEvent.layout.height + (height / (dimensionAssert() ? 3.00 : 3.10));
+                        this.TAB_HEIGHT = -event.nativeEvent.layout.height + (height / (dimensionAssert() ? 3.40 : 3.50));
                     }}
                 >
                     <View style={styles.tab}></View>
@@ -1304,7 +1300,7 @@ export default class TripStarted extends React.Component {
 
                                 /> :
                                 <View style={styles.noResultView}>
-                                    <Text style={styles.noResultText}>{`No perchers awaiting pickups at the moment`}</Text>
+                                    <Text style={styles.noResultText}>{`No Perchers awaiting pickups at the moment`}</Text>
                                 </View>
                             : <></>}
                     </Animated.View>
@@ -1349,8 +1345,6 @@ export default class TripStarted extends React.Component {
                                 </View>
                             : <></>}
                     </Animated.View>
-
-
                     <Text style={[styles.semiBold, { color: colors.BLUE_FONT, fontSize: y(16, true), width: x(313), marginTop: y(17.5) }]}>Vehicle</Text>
                     <View style={{ marginTop: y(8) }}>
                         <ViewVehicle vehicle={this.state.vehicle} />
