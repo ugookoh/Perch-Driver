@@ -513,14 +513,14 @@ export default class TripStarted extends React.Component {
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude,
                 },
-                pitch: 80,
+                pitch: 60,
                 heading: position.coords.heading != -1 ? position.coords.heading : 0,
 
                 // Only on iOS MapKit, in meters. The property is ignored by Google Maps.
                 // altitude: number,
 
                 // Only when using Google Maps.
-                zoom: 15.5,
+                zoom: 16.5,
             });
         };
     };
