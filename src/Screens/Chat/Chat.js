@@ -10,13 +10,13 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import StarRating from 'react-native-star-rating';
 import { Message, UserMessage, DayMonthYear } from '../../Components/TextMessages/TextMessages';
 import axios from 'axios';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import * as ImagePicker from "react-native-image-picker"
 import storage from '@react-native-firebase/storage';
 import { check, PERMISSIONS, RESULTS, request } from 'react-native-permissions';
 
 const BLOCKER_HEIGHT = (dimensionAssert() ? y(65) / 3 : y(189) / 2);
 const DRIVER_PROFILE_HEIGHT_HIDDEN = -y(132);
-let keyboardEvent1 = 'keyboardWillShow';
+const keyboardEvent1 = Platform.OS == 'ios' ? 'keyboardWillShow' : 'keyboardDidShow';
 
 export default class Chat extends React.Component {
     constructor(props) {
@@ -49,15 +49,14 @@ export default class Chat extends React.Component {
     };
     componentDidMount() {
         this.setImage();
-        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+        this.keyboardDidShowListener = Keyboard.addListener(keyboardEvent1, this._keyboardDidShow);
         this.keyboardDidHideListener = Keyboard.addListener('keyboardWillHide', this._keyboardDidHide);
         if (Platform.OS === 'android')
             AsyncStorage.getItem('ANDROID_KEYBOARD_HEIGHT')
                 .then(result => {
                     if (result)
                         this.setState({ keyboardHeight: JSON.parse(result) });
-                    else
-                        keyboardEvent1 = 'keyboardDidShow';
+
                 })
                 .catch(err => { console.log(err.message) });
         database().ref(`chats/${this.state.riderID}-${this.state.driverID}/`).once('value', snap => {
@@ -132,7 +131,7 @@ export default class Chat extends React.Component {
                         maxHeight: width,
                     };
 
-                    launchImageLibrary(options, (response) => {
+                    ImagePicker.default.showImagePicker(options, (response) => {
                         if (response.didCancel) {
                             //console.log('User cancelled image picker');
                         } else if (response.error) {
@@ -213,7 +212,7 @@ export default class Chat extends React.Component {
                 useNativeDriver: false,
             }).start();
 
-        if (Platform.OS === 'android' && keyboardEvent1 === 'keyboardDidShow') {
+        if (Platform.OS === 'android') {
             AsyncStorage.setItem('ANDROID_KEYBOARD_HEIGHT', JSON.stringify(e.endCoordinates.height))
                 .catch(error => { console.log(error.message) });
         };
@@ -496,14 +495,8 @@ export default class Chat extends React.Component {
                                 value={this.state.message}
                                 multiline={true}
                                 textAlignVertical={'top'}
-                                onFocus={() => {
-                                    if (Platform.OS === 'android' && keyboardEvent1 !== 'keyboardDidShow')
-                                        Keyboard.emit('keyboardWillShow')
-                                }}
-                                onEndEditing={() => {
-                                    if (Platform.OS === 'android')
-                                        Keyboard.emit('keyboardWillHide')
-                                }}
+                                onFocus={() => { }}
+                                onEndEditing={() => { }}
                             />
                             <View style={styles.send}>
                                 <TouchableOpacity onPress={() => { this.sendMessage.call(this) }} >

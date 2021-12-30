@@ -573,7 +573,7 @@ export class CurrentRiders extends React.Component {
                                             dropOffCarpooler.call(this, data, userDetails, this.props.historyRef);
                                         });
                                     else
-                                        Alert.alert('Too Far', `You need to be within ${MAX_DISTANCE_TO_PICK_OR_DROP} meters to pick up a rider. Please go closer`, [{
+                                        Alert.alert('Too Far From Destination', `You need to be within ${MAX_DISTANCE_TO_PICK_OR_DROP} meters of the destination to drop off the rider. Please go closer`, [{
                                             text: 'Ok',
                                         }])
                                 }}>

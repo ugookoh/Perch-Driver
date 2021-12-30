@@ -230,13 +230,19 @@ export class OfflineNotice extends React.Component {
                     popInitialNotification: true,
                     requestPermissions: true
                 });
-                if ((remoteMessage.data.navigateTo != this.props.screenName && this.props.screenName !== undefined) || remoteMessage.data.navigateTo == 'TripStarted') {
+                if (this.props.screenName === 'Chat') {
+                    if (remoteMessage.data.navigateTo !== 'Chat')
+                        PushNotification.localNotification({
+                            //... You can use all the options from localNotifications
+                            title: remoteMessage.notification.title,
+                            message: remoteMessage.notification.body,
+                        });
+                } else
                     PushNotification.localNotification({
                         //... You can use all the options from localNotifications
                         title: remoteMessage.notification.title,
                         message: remoteMessage.notification.body,
                     });
-                }
             }
         });
     }

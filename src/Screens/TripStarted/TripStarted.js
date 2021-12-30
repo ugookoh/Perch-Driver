@@ -660,7 +660,7 @@ export default class TripStarted extends React.Component {
                                     database().ref(`carpoolRequests/${this.state.userDetails.driverID}`).remove()
                                         .then(() => {
                                             if (this?.props?.route?.params?.animateMapToCurrentRegion)
-                                                animateMapToCurrentRegion();
+                                                this?.props?.route?.params?.animateMapToCurrentRegion();
                                             this.props.navigation.navigate('Main')
                                         })
                                         .catch(error => { console.log(error.message) })
@@ -808,7 +808,7 @@ export default class TripStarted extends React.Component {
     };
     handleBackButtonClick() {
         if (this?.props?.route?.params?.animateMapToCurrentRegion)
-            animateMapToCurrentRegion();
+            this?.props?.route?.params?.animateMapToCurrentRegion();
         this.props.navigation.navigate('Main');
     };
     nextMove = () => {
