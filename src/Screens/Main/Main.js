@@ -24,6 +24,7 @@ import {
 import { Menu, Pin } from '../../Images/svgimages/vectors';
 import Drawer from '../../Navigation/DrawerComponent/DrawerComponent';
 import styles from './styles';
+import auth from '@react-native-firebase/auth';
 
 const X_OUT = 0;
 const X_IN = -x(325);
@@ -162,6 +163,7 @@ export default class Main extends React.Component {
 
         AsyncStorage.getItem('USER_DETAILS')
             .then(result => {
+                const currentUser = auth().currentUser;
                 if (result) {
                     const userDetails = JSON.parse(result);
                     database().ref(`carpoolRequests/${userDetails.driverID}`).on('value', data => {
@@ -182,6 +184,13 @@ export default class Main extends React.Component {
                     });
 
                     database().ref(`users/${userDetails.userID}/`).on('value', snapshot => {
+                        AsyncStorage.setItem('USER_DETAILS', JSON.stringify(snapshot.val()))
+                            .then(() => { this.setState({ userDetails: snapshot.val() }) })
+                            .catch((e) => { console.log(e.message) })
+                    });
+                }
+                else if (currentUser) {
+                    database().ref(`users/${currentUser.uid}/`).on('value', snapshot => {
                         AsyncStorage.setItem('USER_DETAILS', JSON.stringify(snapshot.val()))
                             .then(() => { this.setState({ userDetails: snapshot.val() }) })
                             .catch((e) => { console.log(e.message) })
@@ -212,7 +221,6 @@ export default class Main extends React.Component {
         permissionLocation()
             .catch(error => { console.log(error.message) });
         searchHistoryList.then((results) => { this.setState({ history: results }) });
-
         Geolocation.getCurrentPosition(
             (position) => {
                 this.setState({
@@ -230,17 +238,16 @@ export default class Main extends React.Component {
             },
             (error) => {
                 console.log(error.code, error.message);
-                Geolocation.requestAuthorization();
+                Geolocation.requestAuthorization("whenInUse");
             },
             {
-                distanceFilter: 10,
-                enableHighAccuracy: Platform.OS == 'ios' ? false : true,
+                enableHighAccuracy: true,
+                timeout: 15000,
+                maximumAge: 10000,
+                distanceFilter: 0,
+                forceRequestLocation: true
             }
-        ).catch((error) => {
-            console.log(error.code, error.message);
-            Geolocation.requestAuthorization();
-        });
-
+        )
         this.watchID = Geolocation.watchPosition(
             position => {//THIS HAPPENS AS THE USER MOVES OR CHANGES LOCATION
                 this.setState({
@@ -251,8 +258,11 @@ export default class Main extends React.Component {
             },
             error => (console.log(error.message)),
             {
-                distanceFilter: 10,
-                enableHighAccuracy: Platform.OS == 'ios' ? false : true,
+                enableHighAccuracy: true,
+                timeout: 15000,
+                maximumAge: 10000,
+                distanceFilter: 0,
+                forceRequestLocation: true
             }
         )
 
@@ -290,16 +300,16 @@ export default class Main extends React.Component {
             },
             (error) => {
                 console.log(error.code, error.message);
-                Geolocation.requestAuthorization();
+                Geolocation.requestAuthorization("whenInUse");
             },
             {
-                distanceFilter: 10,
-                enableHighAccuracy: Platform.OS == 'ios' ? false : true,
+                enableHighAccuracy: true,
+                timeout: 15000,
+                maximumAge: 10000,
+                distanceFilter: 0,
+                forceRequestLocation: true
             }
-        ).catch((error) => {
-            console.log(error.code, error.message);
-            Geolocation.requestAuthorization();
-        });
+        )
     };
 
     componentWillUnmount() {
@@ -541,15 +551,16 @@ export default class Main extends React.Component {
                                     },
                                     (error) => {
                                         console.log(error.code, error.message);
-                                        Geolocation.requestAuthorization();
+                                        Geolocation.requestAuthorization("whenInUse");
                                     },
                                     {
-                                        enableHighAccuracy: Platform.OS == 'ios' ? false : true,
+                                        enableHighAccuracy: true,
+                                        timeout: 15000,
+                                        maximumAge: 10000,
+                                        distanceFilter: 0,
+                                        forceRequestLocation: true
                                     },
-                                ).catch((error) => {
-                                    console.log(error.code, error.message);
-                                    Geolocation.requestAuthorization();
-                                });
+                                )
                             }
                         }}
                     >

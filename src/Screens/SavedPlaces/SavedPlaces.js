@@ -39,16 +39,16 @@ export default class SavedPlaces extends React.Component {
             },
             (error) => {
                 console.log(error.code, error.message);
-                Geolocation.requestAuthorization();
+                Geolocation.requestAuthorization("whenInUse");
             },
             {
-                distanceFilter: 10,
-                enableHighAccuracy: Platform.OS == 'ios' ? false : true,
+                enableHighAccuracy: true,
+                timeout: 15000,
+                maximumAge: 10000,
+                distanceFilter: 0,
+                forceRequestLocation: true
             }
-        ).catch((error) => {
-            console.log(error.code, error.message);
-            Geolocation.requestAuthorization();
-        });
+        )
         this.watchID = setInterval(() => {
             AsyncStorage.getItem('USER_DETAILS')
                 .then((result_) => {
@@ -95,7 +95,7 @@ export default class SavedPlaces extends React.Component {
                 onPress={() => { Keyboard.dismiss() }}
             >
                 <View style={styles.container}>
-                     <OfflineNotice navigation={this.props.navigation} screenName={this.props.route.name} />
+                    <OfflineNotice navigation={this.props.navigation} screenName={this.props.route.name} />
                     <Header name={'Saved Places'} scrollY={this.state.scrollY} onPress={() => {
                         this.props.route.params.onReturn();
                         this.props.navigation.goBack();

@@ -54,8 +54,11 @@ export default class Navigator extends React.Component {
         },
             error => (console.log(error.message)),
             {
-                distanceFilter: 10,
-                enableHighAccuracy: Platform.OS == 'ios' ? false : true,
+                enableHighAccuracy: true,
+                timeout: 15000,
+                maximumAge: 10000,
+                distanceFilter: 0,
+                forceRequestLocation: true
             }
         );
 
@@ -68,16 +71,16 @@ export default class Navigator extends React.Component {
             },
             (error) => {
                 console.log(error.code, error.message);
-                Geolocation.requestAuthorization();
+                Geolocation.requestAuthorization("whenInUse");
             },
             {
-                distanceFilter: 10,
-                enableHighAccuracy: Platform.OS == 'ios' ? false : true,
+                enableHighAccuracy: true,
+                timeout: 15000,
+                maximumAge: 10000,
+                distanceFilter: 0,
+                forceRequestLocation: true
             }
-        ).catch((error) => {
-            console.log(error.code, error.message);
-            Geolocation.requestAuthorization();
-        });
+        )
 
         AsyncStorage.getItem('SPEAKER_CHOICE')
             .then(result => {

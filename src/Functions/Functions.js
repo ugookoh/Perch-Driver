@@ -351,7 +351,7 @@ export function permissionLocation() {
                         AsyncStorage.setItem('LOCATION_GRANTED', JSON.stringify('FALSE_DENIED'))
                             .then(() => { resolve('NOLOCATION') })
                             .catch(error => { console.log(error.message) });
-                        Geolocation.requestAuthorization();
+                        Geolocation.requestAuthorization("whenInUse");
                     }
                         break;
                     case RESULTS.GRANTED:

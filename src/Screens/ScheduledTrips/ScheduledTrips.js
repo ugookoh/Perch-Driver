@@ -193,21 +193,16 @@ export default class TripStarted extends React.Component {
                                 },
                                 (error) => {
                                     console.log(error.code, error.message);
-                                    Geolocation.requestAuthorization();
+                                    Geolocation.requestAuthorization("whenInUse");
                                 },
                                 {
-                                    distanceFilter: 10,
-                                    enableHighAccuracy: Platform.OS == 'ios' ? false : true,
+                                    enableHighAccuracy: true,
+                                    timeout: 15000,
+                                    maximumAge: 10000,
+                                    distanceFilter: 0,
+                                    forceRequestLocation: true
                                 }
-                            ).catch((error) => {
-                                console.log(error.code, error.message);
-                                Geolocation.requestAuthorization();
-                            });
-
-
-
-
-
+                            )
                             database().ref(`scheduledCarpoolRequestsFromUsers/${userDetails.driverID}`).on('child_added', data => {//PENDING REQUEST LISTENER
                                 if (data.val()) {
                                     if (data.val().status == 'PENDING') {
@@ -699,16 +694,16 @@ export default class TripStarted extends React.Component {
             },
             (error) => {
                 console.log(error.code, error.message);
-                Geolocation.requestAuthorization();
+                Geolocation.requestAuthorization("whenInUse");
             },
             {
-                distanceFilter: 10,
-                enableHighAccuracy: Platform.OS == 'ios' ? false : true,
+                enableHighAccuracy: true,
+                timeout: 15000,
+                maximumAge: 10000,
+                distanceFilter: 0,
+                forceRequestLocation: true
             }
-        ).catch((error) => {
-            console.log(error.code, error.message);
-            Geolocation.requestAuthorization();
-        });
+        )
     };
     selectedMove = (item) => {
         this.movingUp = true;
