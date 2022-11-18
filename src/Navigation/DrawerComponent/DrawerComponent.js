@@ -120,16 +120,6 @@ export default class DrawerComponent extends React.Component {
                     </TouchableOpacity>
                     <View style={styles.divider}><Divider height={0.5} width={x(302)} borderRadius={0} borderColor={'#707070'} borderWidth={0.5} /></View>
 
-                    <TouchableOpacity onPress={() => {
-                        this.props.hideMenu();
-                        this.props.navigation.navigate('ScheduledTrips', { userDetails: this.props.userDetails })
-                    }}>
-                        <View style={styles.menuList}>
-                            <AntDesign name={'calendar'} size={y(20)} style={styles.icons} />
-                            <Text style={styles.menuText}>Scheduled trips</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <View style={styles.divider}><Divider height={0.5} width={x(302)} borderRadius={0} borderColor={'#707070'} borderWidth={0.5} /></View>
 
                     <TouchableOpacity onPress={() => {
                         this.props.hideMenu();

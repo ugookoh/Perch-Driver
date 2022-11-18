@@ -578,8 +578,16 @@ export class CurrentRiders extends React.Component {
                                             dropOffCarpooler.call(this, data, userDetails, this.props.historyRef);
                                         });
                                     else
-                                        Alert.alert('Too Far From Destination', `You need to be within ${MAX_DISTANCE_TO_PICK_OR_DROP} meters of the destination to drop off the rider. Please go closer`, [{
-                                            text: 'Ok',
+                                        Alert.alert('Too Far From Destination', `You need to be within ${MAX_DISTANCE_TO_PICK_OR_DROP} meters of the destination to drop off the rider. Are you sure you want to drop off?`, [{
+                                            text: 'Drop off',
+                                            style: 'destructive',
+                                            onPress: () => {
+                                                this.setState({ loading: true }, () => {
+                                                    dropOffCarpooler.call(this, data, userDetails, this.props.historyRef);
+                                                });
+                                            }
+                                        }, {
+                                            text: 'Cancel'
                                         }])
                                 }}>
                                 <Text style={[styles.buttonText, { color: colors.WHITE }]}>Drop off</Text>

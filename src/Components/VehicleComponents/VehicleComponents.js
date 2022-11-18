@@ -174,12 +174,17 @@ export class ChooseVehicle extends React.Component {
 
     componentDidMount() {
     };
-    setImage = () => {
-        if (this.props.vehicle)
-            storage().ref(`${this.props.vehicle.displayImage}`).getDownloadURL()
-                .then(result => {
-                    this.setState({ url: result })
-                }).catch(error => { console.log(error.message) })
+    setImage = async () => {
+        try {
+            if (this.props?.vehicle?.displayImage) {
+                const uri = this.props?.vehicle?.displayImage
+                const result = await storage().ref(`${uri.substring(0, uri.indexOf('.'))}`).getDownloadURL();
+                this.setState({ url: result })
+            }
+        }
+        catch (error) {
+            console.log(error.message)
+        }
     };
     render() {
         const vehicle = this.props.vehicle;

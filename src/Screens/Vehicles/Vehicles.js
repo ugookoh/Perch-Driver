@@ -57,6 +57,8 @@ export default class Vehicles extends React.Component {
                                     break;
                                 }
                             }
+                    } else {
+                        this.setState({ selected: 0, result: [], userDetails: userDetails, vehicleLenght: 0 });
                     }
                 });
             });
@@ -67,7 +69,8 @@ export default class Vehicles extends React.Component {
             <View style={styles.container}>
                 <OfflineNotice navigation={this.props.navigation} screenName={this.props.route.name} />
                 <Header name={'Vehicles'} scrollY={this.state.scrollY} onPress={() => {
-                    this.props.route.params.changeVehicle(this.state.result[this.state.keys[this.state.selected]])
+                    if (this.state.result && this.state.result?.length !== 0)
+                        this.props.route.params.changeVehicle(this.state.result[this.state.keys[this.state.selected]])
                     this.props.navigation.goBack();
                 }} />
                 <Text style={[styles.title, { marginTop: y(28) }]}>{`List of vehicles ${this.state.vehicleLenght ? `(${this.state.vehicleLenght})` : ``}`}</Text>

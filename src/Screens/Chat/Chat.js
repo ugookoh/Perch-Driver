@@ -50,7 +50,7 @@ export default class Chat extends React.Component {
     componentDidMount() {
         this.setImage();
         this.keyboardDidShowListener = Keyboard.addListener(keyboardEvent1, this._keyboardDidShow);
-        this.keyboardDidHideListener = Keyboard.addListener('keyboardWillHide', this._keyboardDidHide);
+        this.keyboardDidHideListener = Keyboard.addListener(Platform.OS == 'ios' ? 'keyboardWillHide' : 'keyboardDidHide', this._keyboardDidHide);
         if (Platform.OS === 'android')
             AsyncStorage.getItem('ANDROID_KEYBOARD_HEIGHT')
                 .then(result => {

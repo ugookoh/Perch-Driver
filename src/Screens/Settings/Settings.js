@@ -57,19 +57,6 @@ export default class Settings extends React.Component {
                     <View style={{ marginTop: y(20.5) }}>
                         <TouchableOpacity
                             onPress={() => {
-                                openBrowser(`https://perchrides.com/s/db/ddash`);
-                            }}>
-                            <View style={styles.optionChoice}>
-                                <Text style={styles.optionText}>Documents</Text>
-                                <Ionicons name={'ios-chevron-forward'} size={y(20)} />
-                            </View>
-                        </TouchableOpacity>
-                        <Divider height={0.5} width={x(350)} borderRadius={3} borderColor={'#707070'} borderWidth={0.5} />
-                    </View>
-
-                    <View style={{ marginTop: y(20.5) }}>
-                        <TouchableOpacity
-                            onPress={() => {
                                 this.props.navigation.navigate('Preferences', {
                                     userDetails: this.props.route.params.userDetails,
                                 });
