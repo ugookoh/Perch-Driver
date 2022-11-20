@@ -608,7 +608,7 @@
 				CODE_SIGN_ENTITLEMENTS = PerchDriver/PerchDriver.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = JHHR9358AL;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
@@ -641,7 +641,7 @@
 				CODE_SIGN_ENTITLEMENTS = PerchDriver/PerchDriverRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = JHHR9358AL;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = PerchDriver/Info.plist;
